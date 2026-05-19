@@ -1,2 +1,2 @@
-# Simulazione-di-un-sistema-a-N-corpi sbleuriiiiis
+# Simulazione-di-un-sistema-a-N-corpi 
 
