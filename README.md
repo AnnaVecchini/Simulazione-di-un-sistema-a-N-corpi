@@ -58,20 +58,20 @@ BOZZA PROGRAMMA=
 - velocità (vettore)   
 - accellerazione (vettore)
 
-2) i vettori li vedo o come std::vector o come struct a 2 D con x e y,
+2) creo delle struct per i vettori a 2 D con x e y, e li implemento per posizione, velocità e accellerazione
 nella struct 2D dei corpi in x y dove si implementano gli operatore + - e || ||
 
-3) implementi le funzioni fondamentali nella classe bodies 
+4) implementi le funzioni fondamentali nella classe bodies 
 
-4) serve un vettore di bodies che li contenga in modo tale che definendo la dimensione del vettore sappiamo
+5) serve un vettore di bodies che li contenga in modo tale che definendo la dimensione del vettore sappiamo
 quanti corpi ci sono
 
-5) fai dei cicli while per fare andare di ogni passo il moto dei corpi implementazione delle funzioni membro
+6) fai dei cicli while per fare andare di ogni passo il moto dei corpi implementazione delle funzioni membro
 nella classe 
 
-6) funzione nella classe bodies che controlli che |v| <300'000 km/s 
+7) funzione nella classe bodies che controlli che |v| <300'000 km/s 
 
-7) funzione nella classe che controlli che m >= 0
+8) funzione nella classe che controlli che m >= 0
 
-8) funzione nella classe che calcola l'energia, un vettore con tutta l'energia all'interno che aumentiamo ad ogni iterazione 
+9) funzione nella classe che calcola l'energia, un vettore con tutta l'energia all'interno che aumentiamo ad ogni iterazione 
 dell'algoritmo e stampiamo alla fine per far vedere che l'energia è conservata
