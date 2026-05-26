@@ -1,7 +1,8 @@
 # Simulazione-di-un-sistema-a-N-corpi 
 
-APPUNTI
-almeno due transaltrion unit
+APPUNTI=
+
+Almeno due transaltrion unit
 zippare tutto insieme
 consegnare anche il clang format, nella repositary del progetto
 modi esperessivi di identificazione, scrivere nella stessa linga.
