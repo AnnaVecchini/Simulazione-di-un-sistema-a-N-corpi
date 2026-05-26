@@ -65,5 +65,5 @@ nella classe
 
 7) funzione nella classe che controlli che m >= 0
 
-8) funzione nella classe che calcola l'energia, possiamo fare un vettore con tutta l'energia all'interno che aumentiamo ad ogni iterazione 
+8) funzione nella classe che calcola l'energia, un vettore con tutta l'energia all'interno che aumentiamo ad ogni iterazione 
 dell'algoritmo e stampiamo alla fine per far vedere che l'energia è conservata
