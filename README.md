@@ -43,6 +43,13 @@ In formato pdf o markdown, in LaTeX
 MOTO DI N CORPI
 parte grafica su FSML
 
+PER FARE ANDARE LE COSE SU GITHUB SI FA 
+- git pull   -> (scarichi gli aggiornamneti degli altri)
+- git add    -> (aggiungi le modifiche)
+- git commit -> (le salvi in modo tale che vengano mandate dopo)
+- git push   -> (le mandi su git hub)
+(git status) -> (ti fa vedere che cosa aggiungi e invii) 
+
 bozza programma
 
 1) ogni corpo deve essere una classe body:
