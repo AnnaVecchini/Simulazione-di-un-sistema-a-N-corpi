@@ -44,11 +44,11 @@ parte grafica su FSML
 
 bozza programma
 
-1) un corpo deve essere una classe body, ha massa, posizione, accellerazione e velocità
--massa (intero/bool)
--posizione (vettore) 
--velocità (vettore)   
--accellerazione (vettore)
+1) ogni corpo deve essere una classe body:
+- massa (intero/bool)
+- posizione (vettore) 
+- velocità (vettore)   
+- accellerazione (vettore)
 
 2) i vettori li vedo o come std::vector o come struct a 2 D con x e y,
 nella struct 2D dei corpi in x y dove si implementano gli operatore + - e || ||
