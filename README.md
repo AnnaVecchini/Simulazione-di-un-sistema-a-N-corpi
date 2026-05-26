@@ -11,11 +11,11 @@ fare degli unit test, con Doctest ad esempio
 compilare con CMake. guardare il file CMakelists.txt (cambiare # aggiungi l'eseguibile progetto.t)
 
 i prof controllano che questi codici funzionino= 
-cmake -S . -B build -G"Ninja Multi-Config" /
-cmake --build build --config Debug / 
-cmake --build build --config Debug --target test /
-cmake --build build --config Release /
-cmake --build build --config Release --target test /
+- cmake -S . -B build -G"Ninja Multi-Config" 
+- cmake --build build --config Debug 
+- cmake --build build --config Debug --target test 
+- cmake --build build --config Release 
+- cmake --build build --config Release --target test 
 
 fare pochi commenti, servono solo per aiutare i prof nei passaggi complicati:
 
