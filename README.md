@@ -48,7 +48,7 @@ PER FARE ANDARE LE COSE SU GITHUB SI FA
 - git add    -> (aggiungi le modifiche)
 - git commit -> (le salvi in modo tale che vengano mandate dopo)
 - git push   -> (le mandi su git hub)
-(git status) -> (ti fa vedere che cosa aggiungi e invii) 
+- (git status) -> (ti fa vedere che cosa aggiungi e invii) 
 
 bozza programma
 
