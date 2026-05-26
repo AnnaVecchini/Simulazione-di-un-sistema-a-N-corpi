@@ -1,5 +1,44 @@
 # Simulazione-di-un-sistema-a-N-corpi 
 
-ciao
-come stai?
-bene tu
+APPUNTI
+almeno due transaltrion unit
+zippare tutto insieme
+consegnare anche il clang format, nella repositary del progetto
+modi esperessivi di identificazione, scrivere nella stessa linga.
+niente spazi e caratteri speciali nei nomi dei files, tutto in minuscolo (es:simulation.cpp) 
+un unico namespace (inerente al progretto. anche pf se serve)
+fare degli unit test, con Doctest ad esempio
+compilare con CMake. guardare il file CMakelists.txt (cambiare # aggiungi l'eseguibile progetto.t)
+
+guardiamo che questi funzionino= 
+cmake -S . -B build -G"Ninja Multi-Config"
+cmake --build build --config Debug
+cmake --build build --config Debug --target test
+cmake --build build --config Release
+cmake --build build --config Release --target test
+
+fare pochi commenti, servono per aiutare i prof nei passaggi complicati
+
+RELAZIONE=
+5 facciate
+
+-titolo del progetto
+-autore o autori del lavoro
+-data, corrispondente alle ultime modifiche al codice (giorno più, giorno meno)
+-eventuali modifiche intercorse dalla consegna precedente
+-descrizione sintetica del tema del progetto, solo nel caso questo non sia uno dei temi da noi proposti
+-descrizione sintetica delle principali scelte progettuali e implementative
+-dichiarazione e giustificazione dell'eventuale uso di costrutti non introdotti a lezione
+-eventuali librerie esterne da installare con apt install
+-istruzioni dettagliate su come eseguire il programma o i programmi che fanno parte del progetto
+-descrizione precisa dei parametri di input e del formato di output, con degli esempi immediatamente usabili da noi per la valutazione
+-interpretazione dei risultati ottenuti
+-strategia di test per verificare che quanto ottenuto sia ragionevolmente esente da errori
+-dichiarazione di eventuale uso di sistemi di Intelligenza Artificiale generativa (usarla per fare i test)
+-ogni altra informazione utile agli obiettivi sopra citati
+
+In formato pdf o markdown, in LaTeX 
+
+MOTO DI N CORPI
+parte grafica su FSML
+
