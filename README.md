@@ -50,7 +50,7 @@ PER FARE ANDARE LE COSE SU GITHUB SI FA
 - git push   -> (le mandi su git hub)
 - (git status) -> (ti fa vedere che cosa aggiungi e invii) 
 
-bozza programma
+BOZZA PROGRAMMA=
 
 1) ogni corpo deve essere una classe body:
 - massa (intero)
