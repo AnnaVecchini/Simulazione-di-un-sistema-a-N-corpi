@@ -45,7 +45,7 @@ parte grafica su FSML
 bozza programma
 
 1) ogni corpo deve essere una classe body:
-- massa (intero/bool)
+- massa (intero)
 - posizione (vettore) 
 - velocità (vettore)   
 - accellerazione (vettore)
