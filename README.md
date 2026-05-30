@@ -46,7 +46,7 @@ parte grafica su FSML
 PER FARE ANDARE LE COSE SU GITHUB SI FA 
 - git pull   -> (scarichi gli aggiornamneti degli altri)
 - git add    -> (aggiungi le modifiche)
-- git commit -> (le salvi in modo tale che vengano mandate dopo)
+- git commit -m "messaggio" -> (le salvi in modo tale che vengano mandate dopo)
 - git push   -> (le mandi su git hub)
 - (git status) -> (ti fa vedere che cosa aggiungi e invii) 
 
@@ -77,4 +77,5 @@ nella classe
 dell'algoritmo e stampiamo alla fine per far vedere che l'energia è conservata
 
 10) fuori dalla calsse introdurre una costante ϵ=10^-12 (da mettere nell'accellerazione) e tutte le costanti della fisica che ci possono servire
+
 
