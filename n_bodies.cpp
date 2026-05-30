@@ -2,10 +2,15 @@
 #include <iostream>
 #include <cmath>
 
+const double G{6.67e-11};
+const double ϵ{10e-12};
+const double Δt{0.001};
+
 struct TDvec {
     double x;
     double y;
 };
+
 
 TDvec operator+ (TDvec const& a, TDvec const& b) {
     return {a.x + b.x, a.y + b.y};

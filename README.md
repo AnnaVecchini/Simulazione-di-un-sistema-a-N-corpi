@@ -75,3 +75,6 @@ nella classe
 
 9) funzione nella classe che calcola l'energia, un vettore con tutta l'energia all'interno che aumentiamo ad ogni iterazione 
 dell'algoritmo e stampiamo alla fine per far vedere che l'energia è conservata
+
+10) fuori dalla calsse introdurre una costante ϵ=10^-12 (da mettere nell'accellerazione) e tutte le costanti della fisica che ci possono servire
+
