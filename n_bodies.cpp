@@ -20,6 +20,10 @@ TDvec operator- (TDvec const& a, TDvec const& b) {
     return {a.x - b.x, a.y - b.y};
 }
 
+TDvec operator* (TDvec const& a, double s) {
+    return {a.x * s, a.y * s};
+}
+
 double norm (TDvec const& a) {
     return sqrt(a.x*a.x + a.y*a.y);
 }
