@@ -8,18 +8,13 @@
 
 namespace pf {
 
-// Costanti fisiche e parametri della simulazione
 inline constexpr double G{6.67e-11};
 inline constexpr double eps{10e-12};
 inline constexpr double dt{0.001};
 inline constexpr double c_light{299792458.};
 
-// Istante di tempo corrente della simulazione (inline variable, C++17):
-// un'unica variabile condivisa da tutte le translation unit che
-// includono questo header.
 inline double t{0.};
 
-// Vettore bidimensionale: usato per posizione, velocita' e accelerazione
 struct TDvec {
   double x;
   double y;
@@ -45,10 +40,6 @@ inline double norm(TDvec const& a) {
   return std::sqrt(a.x * a.x + a.y * a.y);
 }
 
-// Rappresenta un singolo corpo del sistema gravitazionale.
-// La massa resta privata (senza setter) perche' non deve poter
-// cambiare dopo la costruzione. Posizione, velocita' e accelerazione
-// sono pubbliche: un getter/setter triviale non aggiungerebbe nulla.
 class Body {
   double m_;
 

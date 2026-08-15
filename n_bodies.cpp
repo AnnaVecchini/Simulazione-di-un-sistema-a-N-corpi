@@ -159,4 +159,4 @@ bool isAngularMomentumConserved(std::vector<Body> const& bodies, double L0,
   return std::abs(L - L0) <= tolerance * scale;
 }
 
-}  // namespace pf
+} 
