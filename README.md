@@ -82,7 +82,8 @@ dell'algoritmo e stampiamo alla fine per far vedere che l'energia è conservata
 # Teoria C++ usata nel progetto N-Body
 
 Questo file riassume, in ordine cronologico rispetto a come li abbiamo introdotti,
-tutti i concetti di C++ usati per costruire la simulazione.
+tutti i concetti di C++ usati per costruire la simulazione, e spiega perché il
+codice è stato suddiviso nei file che trovi nel progetto.
 
 ---
 

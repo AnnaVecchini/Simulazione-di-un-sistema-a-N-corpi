@@ -1,5 +1,6 @@
 #include "n_bodies.hpp"
 
+#include <cstddef>
 #include <fstream>
 
 namespace pf {
@@ -23,7 +24,8 @@ std::vector<Body> readBodiesFromFile(std::string const& filename) {
   return bodies;
 }
 
-Body::Body(double m, TDvec r, TDvec v, TDvec a) : m_{m}, r{r}, v{v}, a{a} {
+Body::Body(double mass, TDvec pos, TDvec vel, TDvec acc)
+    : m_{mass}, r{pos}, v{vel}, a{acc} {
   if (m_ <= 0) {
     throw std::invalid_argument("La massa deve essere positiva");
   }
@@ -34,12 +36,12 @@ Body::Body(double m, TDvec r, TDvec v, TDvec a) : m_{m}, r{r}, v{v}, a{a} {
 }
 
 void computeAccelerations(std::vector<Body>& bodies) {
-  int N = bodies.size();
+  std::size_t N = bodies.size();
 
-  for (int i{0}; i < N; ++i) {
+  for (std::size_t i{0}; i < N; ++i) {
     TDvec a_i{0, 0};
 
-    for (int j{0}; j < N; ++j) {
+    for (std::size_t j{0}; j < N; ++j) {
       if (j != i) {
         TDvec diff = bodies[i].r - bodies[j].r;
 
@@ -56,16 +58,16 @@ void computeAccelerations(std::vector<Body>& bodies) {
 }
 
 void step(std::vector<Body>& bodies) {
-  int N = bodies.size();
+  std::size_t N = bodies.size();
 
   // Salvo le vecchie accelerazioni a(t), prima di aggiornare le posizioni
   std::vector<TDvec> old_a(N);
-  for (int i{0}; i < N; ++i) {
+  for (std::size_t i{0}; i < N; ++i) {
     old_a[i] = bodies[i].a;
   }
 
   // Primo ciclo: aggiorno TUTTE le posizioni usando v(t) e a(t) correnti
-  for (int i{0}; i < N; ++i) {
+  for (std::size_t i{0}; i < N; ++i) {
     bodies[i].r = bodies[i].r + bodies[i].v * dt + 0.5 * bodies[i].a * dt * dt;
   }
 
@@ -74,7 +76,7 @@ void step(std::vector<Body>& bodies) {
 
   // Secondo ciclo: aggiorno TUTTE le velocita' usando la media
   // tra a(t) (old_a) e a(t+dt) (bodies[i].a, gia' ricalcolata)
-  for (int i{0}; i < N; ++i) {
+  for (std::size_t i{0}; i < N; ++i) {
     bodies[i].v = bodies[i].v + 0.5 * (bodies[i].a + old_a[i]) * dt;
   }
 
@@ -82,19 +84,19 @@ void step(std::vector<Body>& bodies) {
 }
 
 double computeEnergy(std::vector<Body> const& bodies) {
-  int N = bodies.size();
+  std::size_t N = bodies.size();
 
   // Energia cinetica: somma di 1/2 * m * v^2 per ogni corpo
   double K{0.};
-  for (int i{0}; i < N; ++i) {
+  for (std::size_t i{0}; i < N; ++i) {
     double v_i = norm(bodies[i].v);
     K += 0.5 * bodies[i].m() * v_i * v_i;
   }
 
   // Energia potenziale: somma sulle coppie i<j, per non contarle due volte
   double U{0.};
-  for (int i{0}; i < N; ++i) {
-    for (int j{i + 1}; j < N; ++j) {
+  for (std::size_t i{0}; i < N; ++i) {
+    for (std::size_t j{i + 1}; j < N; ++j) {
       double dist = norm(bodies[i].r - bodies[j].r);
       U -= G * bodies[i].m() * bodies[j].m() / dist;
     }
@@ -108,10 +110,10 @@ bool isEnergyConserved(double E0, double E, double tolerance) {
 }
 
 TDvec computeMomentum(std::vector<Body> const& bodies) {
-  int N = bodies.size();
+  std::size_t N = bodies.size();
 
   TDvec P{0., 0.};
-  for (int i{0}; i < N; ++i) {
+  for (std::size_t i{0}; i < N; ++i) {
     P = P + bodies[i].m() * bodies[i].v;
   }
 
@@ -119,10 +121,10 @@ TDvec computeMomentum(std::vector<Body> const& bodies) {
 }
 
 double computeAngularMomentum(std::vector<Body> const& bodies) {
-  int N = bodies.size();
+  std::size_t N = bodies.size();
 
   double L{0.};
-  for (int i{0}; i < N; ++i) {
+  for (std::size_t i{0}; i < N; ++i) {
     L += bodies[i].m() *
          (bodies[i].r.x * bodies[i].v.y - bodies[i].r.y * bodies[i].v.x);
   }
@@ -132,12 +134,12 @@ double computeAngularMomentum(std::vector<Body> const& bodies) {
 
 bool isMomentumConserved(std::vector<Body> const& bodies, TDvec const& P0,
                           double tolerance) {
-  int N = bodies.size();
+  std::size_t N = bodies.size();
 
   // Scala tipica della quantita' di moto dei singoli corpi, usata
   // come riferimento al posto di P0 (che puo' essere nullo)
   double scale{0.};
-  for (int i{0}; i < N; ++i) {
+  for (std::size_t i{0}; i < N; ++i) {
     scale += bodies[i].m() * norm(bodies[i].v);
   }
 
@@ -147,11 +149,11 @@ bool isMomentumConserved(std::vector<Body> const& bodies, TDvec const& P0,
 
 bool isAngularMomentumConserved(std::vector<Body> const& bodies, double L0,
                                  double tolerance) {
-  int N = bodies.size();
+  std::size_t N = bodies.size();
 
   // Scala tipica del momento angolare dei singoli corpi
   double scale{0.};
-  for (int i{0}; i < N; ++i) {
+  for (std::size_t i{0}; i < N; ++i) {
     scale += bodies[i].m() * norm(bodies[i].r) * norm(bodies[i].v);
   }
 
@@ -159,4 +161,4 @@ bool isAngularMomentumConserved(std::vector<Body> const& bodies, double L0,
   return std::abs(L - L0) <= tolerance * scale;
 }
 
-} 
+}  // namespace pf

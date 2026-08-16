@@ -127,4 +127,3 @@ TEST_CASE("step conserva approssimativamente l'energia su pochi passi") {
   double const E{pf::computeEnergy(bodies)};
   CHECK(pf::isEnergyConserved(E0, E, 0.01) == true);
 }
-
