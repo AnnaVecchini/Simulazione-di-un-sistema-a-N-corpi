@@ -27,11 +27,11 @@ std::vector<Body> readBodiesFromFile(std::string const& filename) {
 Body::Body(double mass, TDvec pos, TDvec vel, TDvec acc)
     : m_{mass}, r{pos}, v{vel}, a{acc} {
   if (m_ <= 0) {
-    throw std::invalid_argument("the mass has to be positive");
+    throw std::invalid_argument("The mass has to be positive.");
   }
   if (norm(v) >= c_light) {
     throw std::invalid_argument(
-        "the velocity has to be lesser that the light one");
+        "The velocity has to be lower than the speed of light.");
   }
 }
 
