@@ -7,18 +7,18 @@
 
 #include "doctest.h"
 
-TEST_CASE("Costruzione di un Body valido") {
+TEST_CASE("Costruction of a Body non valid") {
   pf::Body b{1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}};
   CHECK(b.m() == 1.);
 }
 
-TEST_CASE("Body con massa non positiva lancia un'eccezione") {
+TEST_CASE("Body with mass not positive trows an exception") {
   CHECK_THROWS_AS((pf::Body{-1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.},
                              pf::TDvec{0., 0.}}),
                   std::invalid_argument);
 }
 
-TEST_CASE("Body con velocita' superluminale lancia un'eccezione") {
+TEST_CASE("Body with velocity superluminale lancia un'eccezione") {
   CHECK_THROWS_AS((pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{3e8, 0.},
                              pf::TDvec{0., 0.}}),
                   std::invalid_argument);

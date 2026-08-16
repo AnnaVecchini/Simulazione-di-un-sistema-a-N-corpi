@@ -35,9 +35,9 @@ int main() {
         bool L_conserved{pf::isAngularMomentumConserved(bodies, L0, tolerance)};
 
         std::cout << "t = " << pf::t << "  E = " << E
-                  << "  E conservata: " << (E_conserved ? "si" : "no")
-                  << "  P conservata: " << (P_conserved ? "si" : "no")
-                  << "  L conservato: " << (L_conserved ? "si" : "no") << '\n';
+                  << "  E is conserved: " << (E_conserved ? "yes" : "no")
+                  << "  P is conserved: " << (P_conserved ? "yes" : "no")
+                  << "  L is conserved: " << (L_conserved ? "yes" : "no") << '\n';
       }
     }
 
