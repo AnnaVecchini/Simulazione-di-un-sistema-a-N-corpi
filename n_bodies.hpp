@@ -10,7 +10,7 @@ namespace pf {
 
 // Costanti fisiche e parametri della simulazione
 inline constexpr double G{6.67e-11};
-inline constexpr double eps{10e-12};
+inline constexpr double eps{1e-12};
 inline constexpr double dt{0.001};
 inline constexpr double c_light{299792458.};
 
