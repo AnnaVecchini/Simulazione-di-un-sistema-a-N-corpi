@@ -8,7 +8,7 @@ namespace pf {
 std::vector<Body> readBodiesFromFile(std::string const& filename) {
   std::ifstream input{filename};
   if (!input) {
-    throw std::runtime_error("Impossible to open the file: " + filename);
+    throw std::runtime_error("Impossibile aprire il file: " + filename);
   }
 
   std::vector<Body> bodies;
@@ -27,11 +27,11 @@ std::vector<Body> readBodiesFromFile(std::string const& filename) {
 Body::Body(double mass, TDvec pos, TDvec vel, TDvec acc)
     : m_{mass}, r{pos}, v{vel}, a{acc} {
   if (m_ <= 0) {
-    throw std::invalid_argument("The mass has to be positive.");
+    throw std::invalid_argument("La massa deve essere positiva");
   }
   if (norm(v) >= c_light) {
     throw std::invalid_argument(
-        "The velocity has to be lower than the speed of light.");
+        "La velocita deve essere minore di quella della luce");
   }
 }
 

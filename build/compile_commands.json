@@ -1,0 +1,92 @@
+[
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/n_body.dir/Debug/main.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/main.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/main.cpp",
+  "output": "CMakeFiles/n_body.dir/Debug/main.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/n_body.dir/Debug/n_bodies.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "output": "CMakeFiles/n_body.dir/Debug/n_bodies.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/n_body.dir/Release/main.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/main.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/main.cpp",
+  "output": "CMakeFiles/n_body.dir/Release/main.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/n_body.dir/Release/n_bodies.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "output": "CMakeFiles/n_body.dir/Release/n_bodies.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/n_body.dir/RelWithDebInfo/main.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/main.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/main.cpp",
+  "output": "CMakeFiles/n_body.dir/RelWithDebInfo/main.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/n_body.dir/RelWithDebInfo/n_bodies.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "output": "CMakeFiles/n_body.dir/RelWithDebInfo/n_bodies.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/sfml_test.dir/Debug/sfml_test.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/sfml_test.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/sfml_test.cpp",
+  "output": "CMakeFiles/sfml_test.dir/Debug/sfml_test.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/sfml_test.dir/Release/sfml_test.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/sfml_test.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/sfml_test.cpp",
+  "output": "CMakeFiles/sfml_test.dir/Release/sfml_test.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/sfml_test.dir/RelWithDebInfo/sfml_test.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/sfml_test.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/sfml_test.cpp",
+  "output": "CMakeFiles/sfml_test.dir/RelWithDebInfo/sfml_test.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/n_body.t.dir/Debug/n_bodies_test.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies_test.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies_test.cpp",
+  "output": "CMakeFiles/n_body.t.dir/Debug/n_bodies_test.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/n_body.t.dir/Debug/n_bodies.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "output": "CMakeFiles/n_body.t.dir/Debug/n_bodies.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/n_body.t.dir/Release/n_bodies_test.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies_test.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies_test.cpp",
+  "output": "CMakeFiles/n_body.t.dir/Release/n_bodies_test.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/n_body.t.dir/Release/n_bodies.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "output": "CMakeFiles/n_body.t.dir/Release/n_bodies.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/n_body.t.dir/RelWithDebInfo/n_bodies_test.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies_test.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies_test.cpp",
+  "output": "CMakeFiles/n_body.t.dir/RelWithDebInfo/n_bodies_test.cpp.o"
+},
+{
+  "directory": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/n_body.t.dir/RelWithDebInfo/n_bodies.cpp.o -c /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "file": "/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp",
+  "output": "CMakeFiles/n_body.t.dir/RelWithDebInfo/n_bodies.cpp.o"
+}
+]

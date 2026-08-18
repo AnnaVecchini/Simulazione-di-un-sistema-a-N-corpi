@@ -1,0 +1,19 @@
+# ninja log v5
+2	967	1786886257773524645	CMakeFiles/n_body.dir/Debug/main.cpp.o	71390e5ead76cc4a
+4	1011	1786886257816875359	CMakeFiles/sfml_test.dir/Debug/sfml_test.cpp.o	ed95b979f95083a7
+1011	1213	1786886258021806004	Debug/sfml_test	a44d5d191cb1a3fe
+4	1220	1786886258025746978	CMakeFiles/n_body.t.dir/Debug/n_bodies.cpp.o	df03b48baf8be92b
+3	1232	1786886258037569900	CMakeFiles/n_body.dir/Debug/n_bodies.cpp.o	59d2f13a2632a471
+1232	1373	1786886258159740092	Debug/n_body	1bbafbe420b87f62
+4	7516	1786886264314557038	CMakeFiles/n_body.t.dir/Debug/n_bodies_test.cpp.o	5cd2e2ba6baa45b5
+7516	7697	1786886264499085224	Debug/n_body.t	ffd0848bee54dfd6
+1	86	0	CMakeFiles/Debug/test.util	a57b7b10d26d5880
+3	754	1786886282971121026	CMakeFiles/n_body.dir/Release/main.cpp.o	4d0a414cdfddd575
+4	765	1786886282982902173	CMakeFiles/sfml_test.dir/Release/sfml_test.cpp.o	1c28c8909fb9aa69
+765	876	1786886283092859539	Release/sfml_test	bb57f0a7b8c918c5
+4	966	1786886283183181661	CMakeFiles/n_body.dir/Release/n_bodies.cpp.o	1cf04cc5edf5ae21
+5	1000	1786886283222452149	CMakeFiles/n_body.t.dir/Release/n_bodies.cpp.o	b8a4ad2bb37f5197
+966	1098	1786886283304920174	Release/n_body	570c30a910cff943
+4	7501	1786886289717211640	CMakeFiles/n_body.t.dir/Release/n_bodies_test.cpp.o	5d077f774bedc6b3
+7502	7649	1786886289866439746	Release/n_body.t	d3c48cfdfc8b2bf4
+2	27	0	CMakeFiles/Release/test.util	bc2699d55c7391de

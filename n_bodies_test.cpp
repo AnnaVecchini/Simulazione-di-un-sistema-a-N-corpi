@@ -7,24 +7,24 @@
 
 #include "doctest.h"
 
-TEST_CASE("Costruction of a Body non valid.") {
+TEST_CASE("Costruzione di un Body valido") {
   pf::Body b{1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}};
   CHECK(b.m() == 1.);
 }
 
-TEST_CASE("Body with mass not positive throws an exception.") {
+TEST_CASE("Body con massa non positiva lancia un'eccezione") {
   CHECK_THROWS_AS((pf::Body{-1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.},
                              pf::TDvec{0., 0.}}),
                   std::invalid_argument);
 }
 
-TEST_CASE("Body with velocity superluminal throws an exception.") {
+TEST_CASE("Body con velocita' superluminale lancia un'eccezione") {
   CHECK_THROWS_AS((pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{3e8, 0.},
                              pf::TDvec{0., 0.}}),
                   std::invalid_argument);
 }
 
-TEST_CASE("Two identical bodies attract each other with opposite accelerations.") {
+TEST_CASE("Due corpi identici si attraggono con accelerazioni opposte") {
   std::vector<pf::Body> bodies{
       pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}},
       pf::Body{1., pf::TDvec{1., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}}};
@@ -38,12 +38,12 @@ TEST_CASE("Two identical bodies attract each other with opposite accelerations."
   CHECK(bodies[0].a.x == doctest::Approx(-bodies[1].a.x));
 }
 
-TEST_CASE("isEnergyConserved correctly detects within and beyond tolerance.") {
+TEST_CASE("isEnergyConserved rileva correttamente entro ed oltre la tolleranza") {
   CHECK(pf::isEnergyConserved(-100., -100.5, 0.01) == true);
   CHECK(pf::isEnergyConserved(-100., -120., 0.01) == false);
 }
 
-TEST_CASE("readBodiesFromFile correctly reads a valid file.") {
+TEST_CASE("readBodiesFromFile legge correttamente un file valido") {
   std::string const filename{"test_input_tmp.txt"};
   {
     std::ofstream out{filename};
@@ -62,12 +62,12 @@ TEST_CASE("readBodiesFromFile correctly reads a valid file.") {
   std::remove(filename.c_str());
 }
 
-TEST_CASE("readBodiesFromFile throws an exception if the file doesn't exist.") {
+TEST_CASE("readBodiesFromFile lancia un'eccezione se il file non esiste") {
   CHECK_THROWS_AS(pf::readBodiesFromFile("file_che_non_esiste.txt"),
                   std::runtime_error);
 }
 
-TEST_CASE("computeMomentum correctly computes the total momentum.") {
+TEST_CASE("computeMomentum calcola correttamente la quantita' di moto totale") {
   std::vector<pf::Body> bodies{
       pf::Body{2., pf::TDvec{0., 0.}, pf::TDvec{1., 0.}, pf::TDvec{0., 0.}},
       pf::Body{3., pf::TDvec{0., 0.}, pf::TDvec{0., 2.}, pf::TDvec{0., 0.}}};
@@ -77,7 +77,7 @@ TEST_CASE("computeMomentum correctly computes the total momentum.") {
   CHECK(P.y == doctest::Approx(6.));  // 2*0 + 3*2
 }
 
-TEST_CASE("computeAngularMomentum correctly computes the angular momentum.") {
+TEST_CASE("computeAngularMomentum calcola correttamente il momento angolare") {
   std::vector<pf::Body> bodies{
       pf::Body{1., pf::TDvec{1., 0.}, pf::TDvec{0., 1.}, pf::TDvec{0., 0.}}};
 
@@ -85,7 +85,7 @@ TEST_CASE("computeAngularMomentum correctly computes the angular momentum.") {
   CHECK(pf::computeAngularMomentum(bodies) == doctest::Approx(1.));
 }
 
-TEST_CASE("Momentum and angular momentum remain conserved during the simulation.") {
+TEST_CASE("Momento e momento angolare restano conservati durante la simulazione") {
   double const m{1. / pf::G};
   std::vector<pf::Body> bodies{
       pf::Body{m, pf::TDvec{-0.97000436, 0.24308753},
@@ -107,7 +107,7 @@ TEST_CASE("Momentum and angular momentum remain conserved during the simulation.
   CHECK(pf::isAngularMomentumConserved(bodies, L0, 0.01) == true);
 }
 
-TEST_CASE("step approximately conserves energy over a few steps.") {
+TEST_CASE("step conserva approssimativamente l'energia su pochi passi") {
   double const m{1. / pf::G};
   std::vector<pf::Body> bodies{
       pf::Body{m, pf::TDvec{-0.97000436, 0.24308753},
