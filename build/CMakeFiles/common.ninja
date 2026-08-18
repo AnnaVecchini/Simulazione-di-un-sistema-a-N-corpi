@@ -120,19 +120,19 @@ build CMakeFiles/cmake_byproducts_for_clean_target: phony Experimental$:Debug CM
 #############################################
 # Clean byproducts.
 
-build CMakeFiles/cmake_byproducts_for_clean_target$:Debug: phony Debug/n_body Debug/sfml_test Debug/n_body.t
+build CMakeFiles/cmake_byproducts_for_clean_target$:Debug: phony Debug/n_body Debug/n_body.t
 
 
 #############################################
 # Clean byproducts.
 
-build CMakeFiles/cmake_byproducts_for_clean_target$:Release: phony Release/n_body Release/sfml_test Release/n_body.t
+build CMakeFiles/cmake_byproducts_for_clean_target$:Release: phony Release/n_body Release/n_body.t
 
 
 #############################################
 # Clean byproducts.
 
-build CMakeFiles/cmake_byproducts_for_clean_target$:RelWithDebInfo: phony RelWithDebInfo/n_body RelWithDebInfo/sfml_test RelWithDebInfo/n_body.t
+build CMakeFiles/cmake_byproducts_for_clean_target$:RelWithDebInfo: phony RelWithDebInfo/n_body RelWithDebInfo/n_body.t
 
 
 #############################################

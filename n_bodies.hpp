@@ -81,6 +81,13 @@ void computeAccelerations(std::vector<Body>& bodies);
 // almeno una volta prima del primo step).
 void step(std::vector<Body>& bodies);
 
+// Calcola l'energia cinetica totale del sistema: somma di 1/2*m_i*v_i^2
+double computeKineticEnergy(std::vector<Body> const& bodies);
+
+// Calcola l'energia potenziale gravitazionale totale del sistema
+// (somma sulle coppie i<j, per non contarle due volte)
+double computePotentialEnergy(std::vector<Body> const& bodies);
+
 // Calcola l'energia meccanica totale (cinetica + potenziale) del sistema
 double computeEnergy(std::vector<Body> const& bodies);
 

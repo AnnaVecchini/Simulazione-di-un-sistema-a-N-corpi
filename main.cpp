@@ -1,3 +1,5 @@
+#include <array>
+#include <cmath>
 #include <cstddef>
 #include <cstdlib>
 #include <exception>
@@ -16,10 +18,21 @@ constexpr unsigned int window_height{600};
 // caso Figure-8 sono dell'ordine di 1)
 constexpr float scale{200.f};
 
+// Raggio (in pixel) del corpo di massa minima; gli altri corpi
+// vengono disegnati proporzionalmente piu' grandi
+constexpr double base_radius{6.};
+
 // Quanti step di simulazione eseguire per ogni fotogramma disegnato:
 // con dt molto piccolo (0.001), un solo step per frame renderebbe il
 // moto impercettibilmente lento
 constexpr int steps_per_frame{20};
+
+// Colori usati per distinguere i corpi, ciclati con l'indice (l'i-esimo
+// corpo usa colors[i % colors.size()], cosi' funziona anche con piu'
+// corpi che colori disponibili)
+std::array<sf::Color, 6> const colors{sf::Color::Red,    sf::Color::Green,
+                                       sf::Color::Blue,   sf::Color::Yellow,
+                                       sf::Color::Magenta, sf::Color::Cyan};
 
 // Converte una posizione fisica (TDvec) in coordinate pixel,
 // centrando l'origine al centro della finestra e capovolgendo l'asse
@@ -34,14 +47,19 @@ sf::Vector2f toScreenCoordinates(pf::TDvec const& r) {
   return {x, y};
 }
 
-// Disegna tutti i corpi come cerchi bianchi nella finestra
-void drawBodies(std::vector<pf::Body> const& bodies, sf::RenderWindow& window) {
-  float const radius{6.f};
-
+// Disegna tutti i corpi nella finestra: un cerchio colorato per
+// ciascuno, con raggio proporzionale a cbrt(massa/massa_minima) --
+// cbrt perche' se pensiamo ai corpi come sfere di densita' simile, il
+// volume (e quindi il raggio al cubo) e' proporzionale alla massa.
+void drawBodies(std::vector<pf::Body> const& bodies, double min_mass,
+                 sf::RenderWindow& window) {
   for (std::size_t i{0}; i < bodies.size(); ++i) {
-    sf::CircleShape shape{radius};
-    shape.setFillColor(sf::Color::White);
-    shape.setOrigin(radius, radius);
+    double const radius{base_radius * std::cbrt(bodies[i].m() / min_mass)};
+    float const radius_f{static_cast<float>(radius)};
+
+    sf::CircleShape shape{radius_f};
+    shape.setFillColor(colors[i % colors.size()]);
+    shape.setOrigin(radius_f, radius_f);
     shape.setPosition(toScreenCoordinates(bodies[i].r));
     window.draw(shape);
   }
@@ -66,6 +84,16 @@ int main() {
     double const L0{pf::computeAngularMomentum(bodies)};
     double const tolerance{0.01};  // 1% di tolleranza relativa
 
+    // Massa minima fra tutti i corpi, usata come riferimento per il
+    // raggio dei cerchi disegnati. Le masse non cambiano nel tempo,
+    // quindi la calcolo una sola volta prima del ciclo.
+    double min_mass{bodies[0].m()};
+    for (std::size_t i{1}; i < bodies.size(); ++i) {
+      if (bodies[i].m() < min_mass) {
+        min_mass = bodies[i].m();
+      }
+    }
+
     sf::RenderWindow window{sf::VideoMode(window_width, window_height),
                              "Simulazione N-Body"};
     window.setFramerateLimit(60u);
@@ -84,23 +112,36 @@ int main() {
       }
 
       // Ogni ~60 frame (circa una volta al secondo, con il limite di
-      // 60 fps impostato sopra) stampiamo un controllo di conservazione
+      // 60 fps impostato sopra) stampiamo un riepilogo delle
+      // grandezze fisiche conservate, una per riga
       if (frame % 60 == 0) {
-        double const E{pf::computeEnergy(bodies)};
+        double const K{pf::computeKineticEnergy(bodies)};
+        double const U{pf::computePotentialEnergy(bodies)};
+        double const E{K + U};
+        pf::TDvec const P{pf::computeMomentum(bodies)};
+        double const L{pf::computeAngularMomentum(bodies)};
+
         bool const E_conserved{pf::isEnergyConserved(E0, E, tolerance)};
         bool const P_conserved{pf::isMomentumConserved(bodies, P0, tolerance)};
         bool const L_conserved{
             pf::isAngularMomentumConserved(bodies, L0, tolerance)};
 
-        std::cout << "t = " << pf::t << "  E = " << E
-                  << "  E conservata: " << (E_conserved ? "si" : "no")
-                  << "  P conservata: " << (P_conserved ? "si" : "no")
-                  << "  L conservato: " << (L_conserved ? "si" : "no") << '\n';
+        std::cout << "----- t = " << pf::t << " -----\n";
+        std::cout << "Energia cinetica   K = " << K << '\n';
+        std::cout << "Energia potenziale U = " << U << '\n';
+        std::cout << "Energia totale     E = " << E
+                   << "  (conservata: " << (E_conserved ? "si" : "no") << ")\n";
+        std::cout << "Quantita' di moto  Px = " << P.x << '\n';
+        std::cout << "Quantita' di moto  Py = " << P.y
+                   << "  (conservata: " << (P_conserved ? "si" : "no") << ")\n";
+        std::cout << "Momento angolare   L = " << L
+                   << "  (conservato: " << (L_conserved ? "si" : "no") << ")\n";
+        std::cout << '\n';
       }
       ++frame;
 
       window.clear(sf::Color::Black);
-      drawBodies(bodies, window);
+      drawBodies(bodies, min_mass, window);
       window.display();
     }
 

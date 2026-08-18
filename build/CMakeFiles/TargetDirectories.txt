@@ -27,7 +27,6 @@
 /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/CMakeFiles/ContinuousMemCheck.dir
 /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/CMakeFiles/ContinuousSubmit.dir
 /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/CMakeFiles/n_body.dir
-/home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/CMakeFiles/sfml_test.dir
 /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/CMakeFiles/n_body.t.dir
 /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/CMakeFiles/test.dir
 /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/CMakeFiles/edit_cache.dir

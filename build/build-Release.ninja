@@ -68,8 +68,6 @@ build n_body: phony Release/n_body
 
 build n_body.t: phony Release/n_body.t
 
-build sfml_test: phony Release/sfml_test
-
 
 #############################################
 # Folder: /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build

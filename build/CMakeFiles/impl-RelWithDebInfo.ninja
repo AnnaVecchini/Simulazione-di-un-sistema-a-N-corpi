@@ -237,50 +237,15 @@ build CMakeFiles/n_body.dir/RelWithDebInfo/n_bodies.cpp.o: CXX_COMPILER__n_body_
 #############################################
 # Link the executable RelWithDebInfo/n_body
 
-build RelWithDebInfo/n_body: CXX_EXECUTABLE_LINKER__n_body_RelWithDebInfo CMakeFiles/n_body.dir/RelWithDebInfo/main.cpp.o CMakeFiles/n_body.dir/RelWithDebInfo/n_bodies.cpp.o
+build RelWithDebInfo/n_body: CXX_EXECUTABLE_LINKER__n_body_RelWithDebInfo CMakeFiles/n_body.dir/RelWithDebInfo/main.cpp.o CMakeFiles/n_body.dir/RelWithDebInfo/n_bodies.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG
+  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   OBJECT_DIR = CMakeFiles/n_body.dir/RelWithDebInfo
   POST_BUILD = cd /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build && /usr/bin/cmake -E copy /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/initial_conditions.txt /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/RelWithDebInfo
   PRE_LINK = :
   TARGET_COMPILE_PDB = CMakeFiles/n_body.dir/RelWithDebInfo/
   TARGET_FILE = RelWithDebInfo/n_body
   TARGET_PDB = RelWithDebInfo/n_body.pdb
-
-# =============================================================================
-# Object build statements for EXECUTABLE target sfml_test
-
-
-#############################################
-# Order-only phony target for sfml_test
-
-build cmake_object_order_depends_target_sfml_test_RELWITHDEBINFO: phony || CMakeFiles/sfml_test.dir
-
-build CMakeFiles/sfml_test.dir/RelWithDebInfo/sfml_test.cpp.o: CXX_COMPILER__sfml_test_unscanned_RelWithDebInfo /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/sfml_test.cpp || cmake_object_order_depends_target_sfml_test_RELWITHDEBINFO
-  DEFINES = -DCMAKE_INTDIR=\"RelWithDebInfo\"
-  DEP_FILE = CMakeFiles/sfml_test.dir/RelWithDebInfo/sfml_test.cpp.o.d
-  FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20
-  OBJECT_DIR = CMakeFiles/sfml_test.dir/RelWithDebInfo
-  OBJECT_FILE_DIR = CMakeFiles/sfml_test.dir/RelWithDebInfo
-  TARGET_COMPILE_PDB = CMakeFiles/sfml_test.dir/RelWithDebInfo/
-  TARGET_PDB = RelWithDebInfo/sfml_test.pdb
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target sfml_test
-
-
-#############################################
-# Link the executable RelWithDebInfo/sfml_test
-
-build RelWithDebInfo/sfml_test: CXX_EXECUTABLE_LINKER__sfml_test_RelWithDebInfo CMakeFiles/sfml_test.dir/RelWithDebInfo/sfml_test.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
-  FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG
-  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
-  OBJECT_DIR = CMakeFiles/sfml_test.dir/RelWithDebInfo
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_COMPILE_PDB = CMakeFiles/sfml_test.dir/RelWithDebInfo/
-  TARGET_FILE = RelWithDebInfo/sfml_test
-  TARGET_PDB = RelWithDebInfo/sfml_test.pdb
 
 # =============================================================================
 # Object build statements for EXECUTABLE target n_body.t
@@ -554,13 +519,11 @@ build n_body.t$:RelWithDebInfo: phony RelWithDebInfo/n_body.t
 
 build n_body$:RelWithDebInfo: phony RelWithDebInfo/n_body
 
-build sfml_test$:RelWithDebInfo: phony RelWithDebInfo/sfml_test
-
 
 #############################################
 # Folder: /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build
 
-build all$:RelWithDebInfo: phony RelWithDebInfo/n_body RelWithDebInfo/sfml_test RelWithDebInfo/n_body.t
+build all$:RelWithDebInfo: phony RelWithDebInfo/n_body RelWithDebInfo/n_body.t
 
 
 #############################################

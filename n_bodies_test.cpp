@@ -67,6 +67,18 @@ TEST_CASE("readBodiesFromFile lancia un'eccezione se il file non esiste") {
                   std::runtime_error);
 }
 
+TEST_CASE("computeEnergy e' la somma di computeKineticEnergy e computePotentialEnergy") {
+  std::vector<pf::Body> bodies{
+      pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{1., 0.}, pf::TDvec{0., 0.}},
+      pf::Body{1., pf::TDvec{1., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}}};
+
+  double const K{pf::computeKineticEnergy(bodies)};
+  double const U{pf::computePotentialEnergy(bodies)};
+  double const E{pf::computeEnergy(bodies)};
+
+  CHECK(E == doctest::Approx(K + U));
+}
+
 TEST_CASE("computeMomentum calcola correttamente la quantita' di moto totale") {
   std::vector<pf::Body> bodies{
       pf::Body{2., pf::TDvec{0., 0.}, pf::TDvec{1., 0.}, pf::TDvec{0., 0.}},

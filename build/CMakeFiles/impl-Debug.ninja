@@ -237,52 +237,16 @@ build CMakeFiles/n_body.dir/Debug/n_bodies.cpp.o: CXX_COMPILER__n_body_unscanned
 #############################################
 # Link the executable Debug/n_body
 
-build Debug/n_body: CXX_EXECUTABLE_LINKER__n_body_Debug CMakeFiles/n_body.dir/Debug/main.cpp.o CMakeFiles/n_body.dir/Debug/n_bodies.cpp.o
+build Debug/n_body: CXX_EXECUTABLE_LINKER__n_body_Debug CMakeFiles/n_body.dir/Debug/main.cpp.o CMakeFiles/n_body.dir/Debug/n_bodies.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined
   LINK_FLAGS = -fsanitize=address,undefined
+  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   OBJECT_DIR = CMakeFiles/n_body.dir/Debug
   POST_BUILD = cd /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build && /usr/bin/cmake -E copy /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/initial_conditions.txt /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/Debug
   PRE_LINK = :
   TARGET_COMPILE_PDB = CMakeFiles/n_body.dir/Debug/
   TARGET_FILE = Debug/n_body
   TARGET_PDB = Debug/n_body.pdb
-
-# =============================================================================
-# Object build statements for EXECUTABLE target sfml_test
-
-
-#############################################
-# Order-only phony target for sfml_test
-
-build cmake_object_order_depends_target_sfml_test_DEBUG: phony || CMakeFiles/sfml_test.dir
-
-build CMakeFiles/sfml_test.dir/Debug/sfml_test.cpp.o: CXX_COMPILER__sfml_test_unscanned_Debug /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/sfml_test.cpp || cmake_object_order_depends_target_sfml_test_DEBUG
-  DEFINES = -DCMAKE_INTDIR=\"Debug\"
-  DEP_FILE = CMakeFiles/sfml_test.dir/Debug/sfml_test.cpp.o.d
-  FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20
-  OBJECT_DIR = CMakeFiles/sfml_test.dir/Debug
-  OBJECT_FILE_DIR = CMakeFiles/sfml_test.dir/Debug
-  TARGET_COMPILE_PDB = CMakeFiles/sfml_test.dir/Debug/
-  TARGET_PDB = Debug/sfml_test.pdb
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target sfml_test
-
-
-#############################################
-# Link the executable Debug/sfml_test
-
-build Debug/sfml_test: CXX_EXECUTABLE_LINKER__sfml_test_Debug CMakeFiles/sfml_test.dir/Debug/sfml_test.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
-  FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined
-  LINK_FLAGS = -fsanitize=address,undefined
-  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
-  OBJECT_DIR = CMakeFiles/sfml_test.dir/Debug
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_COMPILE_PDB = CMakeFiles/sfml_test.dir/Debug/
-  TARGET_FILE = Debug/sfml_test
-  TARGET_PDB = Debug/sfml_test.pdb
 
 # =============================================================================
 # Object build statements for EXECUTABLE target n_body.t
@@ -557,13 +521,11 @@ build n_body.t$:Debug: phony Debug/n_body.t
 
 build n_body$:Debug: phony Debug/n_body
 
-build sfml_test$:Debug: phony Debug/sfml_test
-
 
 #############################################
 # Folder: /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build
 
-build all$:Debug: phony Debug/n_body Debug/sfml_test Debug/n_body.t
+build all$:Debug: phony Debug/n_body Debug/n_body.t
 
 
 #############################################

@@ -83,17 +83,22 @@ void step(std::vector<Body>& bodies) {
   t += dt;
 }
 
-double computeEnergy(std::vector<Body> const& bodies) {
+double computeKineticEnergy(std::vector<Body> const& bodies) {
   std::size_t N = bodies.size();
 
-  // Energia cinetica: somma di 1/2 * m * v^2 per ogni corpo
   double K{0.};
   for (std::size_t i{0}; i < N; ++i) {
     double v_i = norm(bodies[i].v);
     K += 0.5 * bodies[i].m() * v_i * v_i;
   }
 
-  // Energia potenziale: somma sulle coppie i<j, per non contarle due volte
+  return K;
+}
+
+double computePotentialEnergy(std::vector<Body> const& bodies) {
+  std::size_t N = bodies.size();
+
+  // Somma sulle coppie i<j, per non contarle due volte
   double U{0.};
   for (std::size_t i{0}; i < N; ++i) {
     for (std::size_t j{i + 1}; j < N; ++j) {
@@ -102,7 +107,11 @@ double computeEnergy(std::vector<Body> const& bodies) {
     }
   }
 
-  return K + U;
+  return U;
+}
+
+double computeEnergy(std::vector<Body> const& bodies) {
+  return computeKineticEnergy(bodies) + computePotentialEnergy(bodies);
 }
 
 bool isEnergyConserved(double E0, double E, double tolerance) {
