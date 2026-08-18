@@ -217,8 +217,6 @@ build CMakeFiles/n_body.dir/Release/main.cpp.o: CXX_COMPILER__n_body_unscanned_R
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20
   OBJECT_DIR = CMakeFiles/n_body.dir/Release
   OBJECT_FILE_DIR = CMakeFiles/n_body.dir/Release
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.dir/Release/
-  TARGET_PDB = Release/n_body.pdb
 
 build CMakeFiles/n_body.dir/Release/n_bodies.cpp.o: CXX_COMPILER__n_body_unscanned_Release /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp || cmake_object_order_depends_target_n_body_RELEASE
   DEFINES = -DCMAKE_INTDIR=\"Release\"
@@ -226,8 +224,6 @@ build CMakeFiles/n_body.dir/Release/n_bodies.cpp.o: CXX_COMPILER__n_body_unscann
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20
   OBJECT_DIR = CMakeFiles/n_body.dir/Release
   OBJECT_FILE_DIR = CMakeFiles/n_body.dir/Release
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.dir/Release/
-  TARGET_PDB = Release/n_body.pdb
 
 
 # =============================================================================
@@ -243,9 +239,8 @@ build Release/n_body: CXX_EXECUTABLE_LINKER__n_body_Release CMakeFiles/n_body.di
   OBJECT_DIR = CMakeFiles/n_body.dir/Release
   POST_BUILD = cd /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build && /usr/bin/cmake -E copy /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/initial_conditions.txt /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/Release
   PRE_LINK = :
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.dir/Release/
   TARGET_FILE = Release/n_body
-  TARGET_PDB = Release/n_body.pdb
+  TARGET_PDB = n_body.dbg
 
 # =============================================================================
 # Object build statements for EXECUTABLE target n_body.t
@@ -262,8 +257,6 @@ build CMakeFiles/n_body.t.dir/Release/n_bodies_test.cpp.o: CXX_COMPILER__n_body.
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20
   OBJECT_DIR = CMakeFiles/n_body.t.dir/Release
   OBJECT_FILE_DIR = CMakeFiles/n_body.t.dir/Release
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.t.dir/Release/
-  TARGET_PDB = Release/n_body.t.pdb
 
 build CMakeFiles/n_body.t.dir/Release/n_bodies.cpp.o: CXX_COMPILER__n_body.2et_unscanned_Release /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp || cmake_object_order_depends_target_n_body.t_RELEASE
   DEFINES = -DCMAKE_INTDIR=\"Release\"
@@ -271,8 +264,6 @@ build CMakeFiles/n_body.t.dir/Release/n_bodies.cpp.o: CXX_COMPILER__n_body.2et_u
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20
   OBJECT_DIR = CMakeFiles/n_body.t.dir/Release
   OBJECT_FILE_DIR = CMakeFiles/n_body.t.dir/Release
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.t.dir/Release/
-  TARGET_PDB = Release/n_body.t.pdb
 
 
 # =============================================================================
@@ -287,9 +278,8 @@ build Release/n_body.t: CXX_EXECUTABLE_LINKER__n_body.2et_Release CMakeFiles/n_b
   OBJECT_DIR = CMakeFiles/n_body.t.dir/Release
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.t.dir/Release/
   TARGET_FILE = Release/n_body.t
-  TARGET_PDB = Release/n_body.t.pdb
+  TARGET_PDB = n_body.t.dbg
 
 
 #############################################

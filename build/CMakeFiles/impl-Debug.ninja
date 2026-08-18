@@ -217,8 +217,6 @@ build CMakeFiles/n_body.dir/Debug/main.cpp.o: CXX_COMPILER__n_body_unscanned_Deb
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20
   OBJECT_DIR = CMakeFiles/n_body.dir/Debug
   OBJECT_FILE_DIR = CMakeFiles/n_body.dir/Debug
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.dir/Debug/
-  TARGET_PDB = Debug/n_body.pdb
 
 build CMakeFiles/n_body.dir/Debug/n_bodies.cpp.o: CXX_COMPILER__n_body_unscanned_Debug /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp || cmake_object_order_depends_target_n_body_DEBUG
   DEFINES = -DCMAKE_INTDIR=\"Debug\"
@@ -226,8 +224,6 @@ build CMakeFiles/n_body.dir/Debug/n_bodies.cpp.o: CXX_COMPILER__n_body_unscanned
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20
   OBJECT_DIR = CMakeFiles/n_body.dir/Debug
   OBJECT_FILE_DIR = CMakeFiles/n_body.dir/Debug
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.dir/Debug/
-  TARGET_PDB = Debug/n_body.pdb
 
 
 # =============================================================================
@@ -244,9 +240,8 @@ build Debug/n_body: CXX_EXECUTABLE_LINKER__n_body_Debug CMakeFiles/n_body.dir/De
   OBJECT_DIR = CMakeFiles/n_body.dir/Debug
   POST_BUILD = cd /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build && /usr/bin/cmake -E copy /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/initial_conditions.txt /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/build/Debug
   PRE_LINK = :
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.dir/Debug/
   TARGET_FILE = Debug/n_body
-  TARGET_PDB = Debug/n_body.pdb
+  TARGET_PDB = n_body.dbg
 
 # =============================================================================
 # Object build statements for EXECUTABLE target n_body.t
@@ -263,8 +258,6 @@ build CMakeFiles/n_body.t.dir/Debug/n_bodies_test.cpp.o: CXX_COMPILER__n_body.2e
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20
   OBJECT_DIR = CMakeFiles/n_body.t.dir/Debug
   OBJECT_FILE_DIR = CMakeFiles/n_body.t.dir/Debug
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.t.dir/Debug/
-  TARGET_PDB = Debug/n_body.t.pdb
 
 build CMakeFiles/n_body.t.dir/Debug/n_bodies.cpp.o: CXX_COMPILER__n_body.2et_unscanned_Debug /home/micheleresca/n_bodies/Simulazione-di-un-sistema-a-N-corpi/n_bodies.cpp || cmake_object_order_depends_target_n_body.t_DEBUG
   DEFINES = -DCMAKE_INTDIR=\"Debug\"
@@ -272,8 +265,6 @@ build CMakeFiles/n_body.t.dir/Debug/n_bodies.cpp.o: CXX_COMPILER__n_body.2et_uns
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20
   OBJECT_DIR = CMakeFiles/n_body.t.dir/Debug
   OBJECT_FILE_DIR = CMakeFiles/n_body.t.dir/Debug
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.t.dir/Debug/
-  TARGET_PDB = Debug/n_body.t.pdb
 
 
 # =============================================================================
@@ -289,9 +280,8 @@ build Debug/n_body.t: CXX_EXECUTABLE_LINKER__n_body.2et_Debug CMakeFiles/n_body.
   OBJECT_DIR = CMakeFiles/n_body.t.dir/Debug
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_COMPILE_PDB = CMakeFiles/n_body.t.dir/Debug/
   TARGET_FILE = Debug/n_body.t
-  TARGET_PDB = Debug/n_body.t.pdb
+  TARGET_PDB = n_body.t.dbg
 
 
 #############################################
