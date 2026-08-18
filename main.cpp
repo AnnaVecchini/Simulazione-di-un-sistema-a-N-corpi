@@ -95,7 +95,7 @@ int main() {
     }
 
     sf::RenderWindow window{sf::VideoMode(window_width, window_height),
-                             "Simulazione N-Body"};
+                             "N_bodies Simulation"};
     window.setFramerateLimit(60u);
 
     int frame{0};
