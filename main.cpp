@@ -1,5 +1,4 @@
 #include <array>
-#include <cmath>
 #include <cstddef>
 #include <cstdlib>
 #include <exception>
@@ -14,13 +13,11 @@
 constexpr unsigned int window_width{800};
 constexpr unsigned int window_height{600};
 
-// Pixel per unita' di posizione della simulazione (le posizioni nel
-// caso Figure-8 sono dell'ordine di 1)
+// Pixel per unita' di posizione della simulazione 
 constexpr float scale{200.f};
 
-// Raggio (in pixel) del corpo di massa minima; gli altri corpi
-// vengono disegnati proporzionalmente piu' grandi
-constexpr double base_radius{6.};
+// Raggio (in pixel) usato per disegnare ogni corpo. 
+constexpr float radius{8.f};
 
 // Quanti step di simulazione eseguire per ogni fotogramma disegnato:
 // con dt molto piccolo (0.001), un solo step per frame renderebbe il
@@ -30,8 +27,8 @@ constexpr int steps_per_frame{20};
 // Colori usati per distinguere i corpi, ciclati con l'indice (l'i-esimo
 // corpo usa colors[i % colors.size()], cosi' funziona anche con piu'
 // corpi che colori disponibili)
-std::array<sf::Color, 6> const colors{sf::Color::Red,    sf::Color::Green,
-                                       sf::Color::Blue,   sf::Color::Yellow,
+std::array<sf::Color, 6> const colors{sf::Color::Red,     sf::Color::Green,
+                                       sf::Color::Blue,    sf::Color::Yellow,
                                        sf::Color::Magenta, sf::Color::Cyan};
 
 // Converte una posizione fisica (TDvec) in coordinate pixel,
@@ -48,18 +45,12 @@ sf::Vector2f toScreenCoordinates(pf::TDvec const& r) {
 }
 
 // Disegna tutti i corpi nella finestra: un cerchio colorato per
-// ciascuno, con raggio proporzionale a cbrt(massa/massa_minima) --
-// cbrt perche' se pensiamo ai corpi come sfere di densita' simile, il
-// volume (e quindi il raggio al cubo) e' proporzionale alla massa.
-void drawBodies(std::vector<pf::Body> const& bodies, double min_mass,
-                 sf::RenderWindow& window) {
+// ciascuno
+void drawBodies(std::vector<pf::Body> const& bodies, sf::RenderWindow& window) {
   for (std::size_t i{0}; i < bodies.size(); ++i) {
-    double const radius{base_radius * std::cbrt(bodies[i].m() / min_mass)};
-    float const radius_f{static_cast<float>(radius)};
-
-    sf::CircleShape shape{radius_f};
+    sf::CircleShape shape{radius};
     shape.setFillColor(colors[i % colors.size()]);
-    shape.setOrigin(radius_f, radius_f);
+    shape.setOrigin(radius, radius);
     shape.setPosition(toScreenCoordinates(bodies[i].r));
     window.draw(shape);
   }
@@ -67,7 +58,7 @@ void drawBodies(std::vector<pf::Body> const& bodies, double min_mass,
 
 int main() {
   try {
-    // Condizioni iniziali lette da file: caso Figure-8 (traccia).
+    // Condizioni iniziali lette da file.
     // Nel file, le masse sono gia' scalate a 1/G. Le condizioni
     // iniziali originali sono pensate per G=1, m=1; con il vero
     // G=6.67e-11 le forze sarebbero troppo deboli per generare la
@@ -83,16 +74,6 @@ int main() {
     pf::TDvec const P0{pf::computeMomentum(bodies)};
     double const L0{pf::computeAngularMomentum(bodies)};
     double const tolerance{0.01};  // 1% di tolleranza relativa
-
-    // Massa minima fra tutti i corpi, usata come riferimento per il
-    // raggio dei cerchi disegnati. Le masse non cambiano nel tempo,
-    // quindi la calcolo una sola volta prima del ciclo.
-    double min_mass{bodies[0].m()};
-    for (std::size_t i{1}; i < bodies.size(); ++i) {
-      if (bodies[i].m() < min_mass) {
-        min_mass = bodies[i].m();
-      }
-    }
 
     sf::RenderWindow window{sf::VideoMode(window_width, window_height),
                              "N_bodies Simulation"};
@@ -141,7 +122,7 @@ int main() {
       ++frame;
 
       window.clear(sf::Color::Black);
-      drawBodies(bodies, min_mass, window);
+      drawBodies(bodies, window);
       window.display();
     }
 

@@ -1,30 +1,28 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
 #include "n_bodies.hpp"
 
 #include <cstdio>
 #include <fstream>
-
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
-TEST_CASE("Costruzione di un Body valido") {
+TEST_CASE("Testing a valid contruction of a Body") {
   pf::Body b{1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}};
   CHECK(b.m() == 1.);
 }
 
-TEST_CASE("Body con massa non positiva lancia un'eccezione") {
+TEST_CASE("Body with negative mass throws an exception") {
   CHECK_THROWS_AS((pf::Body{-1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.},
                              pf::TDvec{0., 0.}}),
                   std::invalid_argument);
 }
 
-TEST_CASE("Body con velocita' superluminale lancia un'eccezione") {
+TEST_CASE("Body with superluminar speed throws an exception") {
   CHECK_THROWS_AS((pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{3e8, 0.},
                              pf::TDvec{0., 0.}}),
                   std::invalid_argument);
 }
 
-TEST_CASE("Due corpi identici si attraggono con accelerazioni opposte") {
+TEST_CASE("Two equals body have same acceleration") {
   std::vector<pf::Body> bodies{
       pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}},
       pf::Body{1., pf::TDvec{1., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}}};
@@ -43,7 +41,7 @@ TEST_CASE("isEnergyConserved rileva correttamente entro ed oltre la tolleranza")
   CHECK(pf::isEnergyConserved(-100., -120., 0.01) == false);
 }
 
-TEST_CASE("readBodiesFromFile legge correttamente un file valido") {
+TEST_CASE("readBodiesFromFile reads correctly a valid file") {
   std::string const filename{"test_input_tmp.txt"};
   {
     std::ofstream out{filename};
@@ -62,12 +60,12 @@ TEST_CASE("readBodiesFromFile legge correttamente un file valido") {
   std::remove(filename.c_str());
 }
 
-TEST_CASE("readBodiesFromFile lancia un'eccezione se il file non esiste") {
+TEST_CASE("readBodiesFromFile throws an exception if file doesn't exists") {
   CHECK_THROWS_AS(pf::readBodiesFromFile("file_che_non_esiste.txt"),
                   std::runtime_error);
 }
 
-TEST_CASE("computeEnergy e' la somma di computeKineticEnergy e computePotentialEnergy") {
+TEST_CASE("computeEnergy is the sum of kinetic and potential energy") {
   std::vector<pf::Body> bodies{
       pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{1., 0.}, pf::TDvec{0., 0.}},
       pf::Body{1., pf::TDvec{1., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}}};
@@ -79,7 +77,7 @@ TEST_CASE("computeEnergy e' la somma di computeKineticEnergy e computePotentialE
   CHECK(E == doctest::Approx(K + U));
 }
 
-TEST_CASE("computeMomentum calcola correttamente la quantita' di moto totale") {
+TEST_CASE("computeMomentum computes correctly the total momentum") {
   std::vector<pf::Body> bodies{
       pf::Body{2., pf::TDvec{0., 0.}, pf::TDvec{1., 0.}, pf::TDvec{0., 0.}},
       pf::Body{3., pf::TDvec{0., 0.}, pf::TDvec{0., 2.}, pf::TDvec{0., 0.}}};
@@ -89,7 +87,7 @@ TEST_CASE("computeMomentum calcola correttamente la quantita' di moto totale") {
   CHECK(P.y == doctest::Approx(6.));  // 2*0 + 3*2
 }
 
-TEST_CASE("computeAngularMomentum calcola correttamente il momento angolare") {
+TEST_CASE("computeAngularMomentum computes correctly the angular momentum") {
   std::vector<pf::Body> bodies{
       pf::Body{1., pf::TDvec{1., 0.}, pf::TDvec{0., 1.}, pf::TDvec{0., 0.}}};
 

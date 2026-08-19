@@ -114,6 +114,6 @@ bool isMomentumConserved(std::vector<Body> const& bodies, TDvec const& P0,
 bool isAngularMomentumConserved(std::vector<Body> const& bodies, double L0,
                                  double tolerance);
 
-}  // namespace pf
+} 
 
 #endif
