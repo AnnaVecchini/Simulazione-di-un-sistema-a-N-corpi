@@ -13,10 +13,13 @@
 constexpr unsigned int window_width{800};
 constexpr unsigned int window_height{600};
 
-// Pixel per unita' di posizione della simulazione 
+// Pixel per unita' di posizione della simulazione (le posizioni nel
+// caso Figure-8 sono dell'ordine di 1)
 constexpr float scale{200.f};
 
-// Raggio (in pixel) usato per disegnare ogni corpo. 
+// Raggio (in pixel) usato per disegnare ogni corpo. Non dipende dalla
+// massa: e' un valore fisso, uguale per tutti i corpi, scelto solo
+// per una buona resa grafica.
 constexpr float radius{8.f};
 
 // Quanti step di simulazione eseguire per ogni fotogramma disegnato:
@@ -45,7 +48,7 @@ sf::Vector2f toScreenCoordinates(pf::TDvec const& r) {
 }
 
 // Disegna tutti i corpi nella finestra: un cerchio colorato per
-// ciascuno
+// ciascuno, tutti con lo stesso raggio fisso.
 void drawBodies(std::vector<pf::Body> const& bodies, sf::RenderWindow& window) {
   for (std::size_t i{0}; i < bodies.size(); ++i) {
     sf::CircleShape shape{radius};
@@ -58,7 +61,7 @@ void drawBodies(std::vector<pf::Body> const& bodies, sf::RenderWindow& window) {
 
 int main() {
   try {
-    // Condizioni iniziali lette da file.
+    // Condizioni iniziali lette da file: caso Figure-8 (traccia).
     // Nel file, le masse sono gia' scalate a 1/G. Le condizioni
     // iniziali originali sono pensate per G=1, m=1; con il vero
     // G=6.67e-11 le forze sarebbero troppo deboli per generare la
