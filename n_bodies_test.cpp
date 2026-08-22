@@ -95,7 +95,7 @@ TEST_CASE("computeAngularMomentum computes correctly the angular momentum") {
   CHECK(pf::computeAngularMomentum(bodies) == doctest::Approx(1.));
 }
 
-TEST_CASE("Momento e momento angolare restano conservati durante la simulazione") {
+TEST_CASE("Momentum and angular momentum are conserved during the simulation") {
   double const m{1. / pf::G};
   std::vector<pf::Body> bodies{
       pf::Body{m, pf::TDvec{-0.97000436, 0.24308753},
@@ -117,7 +117,7 @@ TEST_CASE("Momento e momento angolare restano conservati durante la simulazione"
   CHECK(pf::isAngularMomentumConserved(bodies, L0, 0.01) == true);
 }
 
-TEST_CASE("step conserva approssimativamente l'energia su pochi passi") {
+TEST_CASE("step conserves energy approximately over a few steps") {
   double const m{1. / pf::G};
   std::vector<pf::Body> bodies{
       pf::Body{m, pf::TDvec{-0.97000436, 0.24308753},

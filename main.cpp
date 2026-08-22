@@ -111,15 +111,15 @@ int main() {
             pf::isAngularMomentumConserved(bodies, L0, tolerance)};
 
         std::cout << "----- t = " << pf::t << " -----\n";
-        std::cout << "Energia cinetica   K = " << K << '\n';
-        std::cout << "Energia potenziale U = " << U << '\n';
-        std::cout << "Energia totale     E = " << E
-                   << "  (conservata: " << (E_conserved ? "si" : "no") << ")\n";
-        std::cout << "Quantita' di moto  Px = " << P.x << '\n';
-        std::cout << "Quantita' di moto  Py = " << P.y
-                   << "  (conservata: " << (P_conserved ? "si" : "no") << ")\n";
-        std::cout << "Momento angolare   L = " << L
-                   << "  (conservato: " << (L_conserved ? "si" : "no") << ")\n";
+        std::cout << "Kinetic energy   K = " << K << '\n';
+        std::cout << "Potential energy U = " << U << '\n';
+        std::cout << "Total energy     E = " << E
+                   << "  (is conserved: " << (E_conserved ? "yes" : "no") << ")\n";
+        std::cout << "Momentum  Px = " << P.x << '\n';
+        std::cout << "Momentum  Py = " << P.y
+                   << "  (is conserved: " << (P_conserved ? "yes" : "no") << ")\n";
+        std::cout << "Angular momentum   L = " << L
+                   << "  (is conserved: " << (L_conserved ? "yes" : "no") << ")\n";
         std::cout << '\n';
       }
       ++frame;
