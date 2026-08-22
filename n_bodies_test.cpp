@@ -36,7 +36,7 @@ TEST_CASE("Two equals body have same acceleration") {
   CHECK(bodies[0].a.x == doctest::Approx(-bodies[1].a.x));
 }
 
-TEST_CASE("isEnergyConserved rileva correttamente entro ed oltre la tolleranza") {
+TEST_CASE("isEnergyConserved correctly detects within and beyond tolerance") {
   CHECK(pf::isEnergyConserved(-100., -100.5, 0.01) == true);
   CHECK(pf::isEnergyConserved(-100., -120., 0.01) == false);
 }

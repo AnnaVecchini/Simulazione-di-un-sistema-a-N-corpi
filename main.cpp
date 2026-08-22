@@ -4,7 +4,6 @@
 #include <exception>
 #include <iostream>
 #include <vector>
-
 #include <SFML/Graphics.hpp>
 
 #include "n_bodies.hpp"
