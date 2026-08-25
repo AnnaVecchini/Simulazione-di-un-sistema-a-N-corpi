@@ -4,7 +4,7 @@
 #include <exception>
 #include <iostream>
 #include <vector>
-#include <deque> //questo
+//#include <deque> 
 #include <SFML/Graphics.hpp>
 
 #include "n_bodies.hpp"
@@ -27,7 +27,7 @@ constexpr float radius{8.f};
 // moto impercettibilmente lento
 constexpr int steps_per_frame{20};
 
-constexpr std::size_t trail_length{200}; //questo
+//constexpr std::size_t trail_length{200}; 
 
 // Colori usati per distinguere i corpi, ciclati con l'indice (l'i-esimo
 // corpo usa colors[i % colors.size()], cosi' funziona anche con piu'
@@ -61,7 +61,7 @@ void drawBodies(std::vector<pf::Body> const& bodies, sf::RenderWindow& window) {
   }
 }
 
-void drawTrails(std::vector<std::deque<sf::Vector2f>> const& trails, //questo
+/*void drawTrails(std::vector<std::deque<sf::Vector2f>> const& trails, 
                  sf::RenderWindow& window) {
   for (std::size_t i{0}; i < trails.size(); ++i) {
     sf::VertexArray line{sf::LineStrip, trails[i].size()};
@@ -78,7 +78,7 @@ void drawTrails(std::vector<std::deque<sf::Vector2f>> const& trails, //questo
     }
     window.draw(line);
   }
-}
+}*/
 
 int main() {
   try {
@@ -90,7 +90,7 @@ int main() {
     // riproducendo la stessa dinamica del caso originale.
     std::vector<pf::Body> bodies{pf::readBodiesFromFile("initial_conditions.txt")};
 
-    std::vector<std::deque<sf::Vector2f>> trails(bodies.size()); //questo
+    //std::vector<std::deque<sf::Vector2f>> trails(bodies.size()); 
 
     // Inizializzo le accelerazioni a(0) PRIMA del ciclo: step() si
     // aspetta che bodies[i].a contenga gia' l'accelerazione corrente
@@ -117,12 +117,12 @@ int main() {
       for (int i{0}; i < steps_per_frame; ++i) {
         pf::step(bodies);
       }
-      for (std::size_t i{0}; i < bodies.size(); ++i) { //questo
+      /*for (std::size_t i{0}; i < bodies.size(); ++i) { 
        trails[i].push_back(toScreenCoordinates(bodies[i].r));
        if (trails[i].size() > trail_length) {
        trails[i].pop_front();
        }
-       }
+       }*/
 
       // Ogni ~60 frame (circa una volta al secondo, con il limite di
       // 60 fps impostato sopra) stampiamo un riepilogo delle
@@ -154,7 +154,7 @@ int main() {
       ++frame;
 
       window.clear(sf::Color::Black);
-      drawTrails(trails, window) //questo
+      //drawTrails(trails, window) 
       drawBodies(bodies, window);
       window.display();
     }
