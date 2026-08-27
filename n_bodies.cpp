@@ -194,23 +194,17 @@ void Simulation::step() {
   }
 }
 
-void Simulation::run(int n_steps) {
-  for (int i{}; i < n_steps; ++i) {
-    step();
-  }
-}
-
 // ============================================================================
 // On screen informations
 // ============================================================================
 void print_total(std::string const &name, double i_value, double c_value,
                  int step) {
-  std::cout
-      << name << "(step: " << step << ") = " << c_value
-      << (is_conserved(i_value, c_value)
-              ? " (conserved)"
-              : " (\033[31mnot conserved\033[0m)") // prints "not conserved" red
-      << '\n';
+  std::cout << name << "(step: " << step << ") = " << c_value
+            << (is_conserved(i_value, c_value)
+                    ? " (conserved)"
+                    : " (\033[31mnot conserved\033[0m)")  // prints "not
+                                                          // conserved" red
+            << '\n';
 }
 
 void print_total(std::string const &name, Vec2D const &i_vec,
@@ -219,8 +213,8 @@ void print_total(std::string const &name, Vec2D const &i_vec,
             << c_vec.y << ")"
             << (is_conserved(i_vec, c_vec)
                     ? " (conserved)"
-                    : " (\033[31mnot conserved\033[0m))") // prints "not
-                                                          // conserved" red
+                    : " (\033[31mnot conserved\033[0m))")  // prints "not
+                                                           // conserved" red
             << '\n';
 }
-} // namespace pf
+}  // namespace pf

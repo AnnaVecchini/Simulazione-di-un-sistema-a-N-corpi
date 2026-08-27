@@ -13,7 +13,7 @@ namespace pf {
 namespace constant {
 inline constexpr double c_light{300000.};
 inline constexpr double G{6.67E-11};
-} // namespace constant
+}  // namespace constant
 
 // ============================================================================
 // 2D algebra
@@ -45,7 +45,7 @@ class Body {
 
   void validate();
 
-public:
+ public:
   Body(double mass, Vec2D pos, Vec2D vel);
   Body(double mass, double rx, double ry, double vx, double vy);
 
@@ -97,13 +97,12 @@ class Simulation {
   void validate();
   void calculate_acceleration();
 
-public:
+ public:
   Simulation(std::vector<Body> v);
 
   const std::vector<Body> &get_bodies() const { return bodies_; }
 
   void step();
-  void run(int steps); // useful for tests and quick simulations
 };
 
 // ============================================================================
@@ -115,5 +114,5 @@ void print_total(std::string const &name, double i_value, double c_value,
 void print_total(std::string const &name, Vec2D const &i_vec,
                  Vec2D const &c_vec, int step);
 
-} // namespace pf
+}  // namespace pf
 #endif
