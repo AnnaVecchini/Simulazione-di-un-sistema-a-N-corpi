@@ -78,3 +78,4 @@ int main() {
     std::cerr << "Caught unknown exception\n";
     return EXIT_FAILURE;
   }
+}
