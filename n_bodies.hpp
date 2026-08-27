@@ -11,7 +11,7 @@ namespace pf {
 // Universal constants
 // ============================================================================
 namespace constant {
-inline constexpr double c_light{299792458};
+inline constexpr double c_light{299792458.};
 inline constexpr double G{6.67E-11};
 }  // namespace constant
 
