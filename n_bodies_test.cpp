@@ -96,7 +96,7 @@ TEST_CASE("Body kinematics update (Velocity-Verlet steps)") {
 }
 
 // ============================================================================
-// 3. ENERGY/ MOMENTUM/ AGULAR MOMENTUM TESTS
+// 3. ENERGY/ MOMENTUM/ ANGULAR MOMENTUM TESTS
 // ============================================================================
 TEST_CASE("Single body kinetic energy, momentum, and angular momentum") {
   pf::Body b1{1., pf::Vec2D{1., 0.}, pf::Vec2D{0., 1.}};
