@@ -1,47 +1,151 @@
-#include "n_bodies.hpp"
-
-#include <cstdio>
-#include <fstream>
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
-TEST_CASE("Testing a valid contruction of a Body") {
-  pf::Body b{1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}};
-  CHECK(b.m() == 1.);
+#include "n_bodies.hpp"
+
+// ============================================================================
+// 1. 2D ALGEBRA TESTS
+// ============================================================================
+TEST_CASE("Vec2D equality operator==") {
+  pf::Vec2D u{3., 4.};
+  pf::Vec2D v{1., -2.};
+
+  CHECK(u == pf::Vec2D{3., 4.});
+  CHECK_FALSE(u == v);
 }
 
-TEST_CASE("Body with negative mass throws an exception") {
-  CHECK_THROWS_AS((pf::Body{-1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.},
-                             pf::TDvec{0., 0.}}),
-                  std::invalid_argument);
+TEST_CASE("Vec2D addition operator+ and operator+=") {
+  pf::Vec2D u{3., 4.};
+  pf::Vec2D v{1., -2.};
+
+  pf::Vec2D sum = u + v;
+  CHECK(sum == pf::Vec2D{4., 2.});
+
+  u += v;
+  CHECK(u == pf::Vec2D{4., 2.});
 }
 
-TEST_CASE("Body with superluminar speed throws an exception") {
-  CHECK_THROWS_AS((pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{3e8, 0.},
-                             pf::TDvec{0., 0.}}),
-                  std::invalid_argument);
+TEST_CASE("Vec2D subtraction operator-") {
+  pf::Vec2D u{3., 4.};
+  pf::Vec2D v{1., -2.};
+
+  pf::Vec2D diff = u - v;
+  CHECK(diff == pf::Vec2D{2., 6.});
 }
 
-TEST_CASE("Two equals body have same acceleration") {
-  std::vector<pf::Body> bodies{
-      pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}},
-      pf::Body{1., pf::TDvec{1., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}}};
+TEST_CASE("Vec2D scalar multiplication operator*") {
+  pf::Vec2D u{3., 4.};
 
-  pf::computeAccelerations(bodies);
-
-  // Il corpo 0 e' attratto verso il corpo 1 (accelerazione positiva su x)
-  CHECK(bodies[0].a.x > 0.);
-  // Per il terzo principio della dinamica le accelerazioni sono opposte
-  // (a meno del rapporto delle masse, qui uguali)
-  CHECK(bodies[0].a.x == doctest::Approx(-bodies[1].a.x));
+  pf::Vec2D scaled1 = u * 2.0;
+  pf::Vec2D scaled2 = 2.0 * u;
+  CHECK(scaled1 == pf::Vec2D{6., 8.});
+  CHECK(scaled2 == pf::Vec2D{6., 8.});
 }
 
-TEST_CASE("isEnergyConserved correctly detects within and beyond tolerance") {
-  CHECK(pf::isEnergyConserved(-100., -100.5, 0.01) == true);
-  CHECK(pf::isEnergyConserved(-100., -120., 0.01) == false);
+TEST_CASE("Vec2D norm and norm2") {
+  pf::Vec2D u{3., 4.};
+
+  CHECK(pf::norm2(u) == doctest::Approx(25.0)); // 3^2 + 4^2
+  CHECK(pf::norm(u) == doctest::Approx(5.0));   // sqrt(25)
 }
 
-TEST_CASE("readBodiesFromFile reads correctly a valid file") {
+// ============================================================================
+// 2. CLASS BODY/ VALIDATION TESTS
+// ============================================================================
+TEST_CASE("Body construction with Vec2D") {
+  pf::Body b{1., pf::Vec2D{1., -1.}, pf::Vec2D{2., 0.}};
+  CHECK(b.get_m() == 1.);
+  CHECK(b.get_r() == pf::Vec2D{1., -1.});
+  CHECK(b.get_v() == pf::Vec2D{2., 0.});
+  CHECK(b.get_a() == pf::Vec2D{0., 0.});
+}
+
+TEST_CASE("Body construction with scalars") {
+  pf::Body b{1., 1., -1., 2., 0.};
+  CHECK(b.get_m() == 1.);
+  CHECK(b.get_r() == pf::Vec2D{1., -1.});
+  CHECK(b.get_v() == pf::Vec2D{2., 0.});
+  CHECK(b.get_a() == pf::Vec2D{0., 0.});
+}
+
+TEST_CASE("Body validation throws on negative mass") {
+  CHECK_THROWS_AS((pf::Body{-1., pf::Vec2D{0., 0.}, pf::Vec2D{0., 0.}}),
+                  std::runtime_error);
+}
+
+TEST_CASE("Body validation throws on superluminal speed") {
+  CHECK_THROWS_AS((pf::Body{1., pf::Vec2D{0., 0.}, pf::Vec2D{3e8, 0.}}),
+                  std::runtime_error);
+}
+
+TEST_CASE("Body kinematics update (Velocity-Verlet steps)") {
+  pf::Body b{1., pf::Vec2D{0., 0.}, pf::Vec2D{10., 0.}};
+  b.set_a(pf::Vec2D{2., 0.});
+  double dt = 1.0;
+
+  // r_new = r + v*dt + 0.5*a*dt^2 = (0,0) + (10,0)*1 + 0.5*(2,0)*1 = (11, 0)
+  b.update_position(dt);
+  CHECK(b.get_r() == pf::Vec2D{11., 0.});
+
+  // v_new = v + 0.5*(a_old + a_new)*dt = (10,0) + 0.5*((2,0) + (4,0))*1 = (13,
+  // 0)
+  pf::Vec2D new_a{4., 0.};
+  b.set_a(new_a);
+  b.update_velocity(pf::Vec2D{2., 0.}, dt);
+  CHECK(b.get_v() == pf::Vec2D{13., 0.});
+}
+
+// ============================================================================
+// 3. ENERGY/ MOMENTUM/ AGULAR MOMENTUM TESTS
+// ============================================================================
+TEST_CASE("Single body kinetic energy, momentum, and angular momentum") {
+  pf::Body b1{1., pf::Vec2D{1., 0.}, pf::Vec2D{0., 1.}};
+
+  CHECK(pf::calculate_kinetic_energy(b1) == doctest::Approx(0.5));
+  CHECK(pf::calculate_momentum(b1) == pf::Vec2D{0., 1.});
+  // L = m * (x*vy - y*vx) = 1 * (1*1 - 0*0) = 1
+  CHECK(pf::calculate_angular_momentum(b1) == doctest::Approx(1.0));
+}
+
+TEST_CASE("Total energy equals kinetic plus potential energy") {
+  pf::Body b1{1., pf::Vec2D{1., 0.}, pf::Vec2D{0., 1.}};
+  pf::Body b2{2., pf::Vec2D{0., 0.}, pf::Vec2D{1., 0.}};
+  std::vector<pf::Body> bodies{b1, b2};
+
+  double const E{pf::total_energy(bodies)};
+  CHECK(E == doctest::Approx(pf::total_kinetic_energy(bodies) +
+                             pf::total_potential_energy(bodies)));
+}
+
+TEST_CASE("compute_totals aggregates all quantities correctly") {
+  pf::Body b1{1., pf::Vec2D{1., 0.}, pf::Vec2D{0., 1.}};
+  pf::Body b2{2., pf::Vec2D{0., 0.}, pf::Vec2D{1., 0.}};
+  std::vector<pf::Body> bodies{b1, b2};
+
+  pf::SystemTotals totals = pf::compute_totals(bodies);
+  CHECK(totals.E == doctest::Approx(pf::total_energy(bodies)));
+  CHECK(totals.P == pf::total_momentum(bodies));
+  CHECK(totals.L == doctest::Approx(pf::total_angular_momentum(bodies)));
+}
+
+TEST_CASE("is_conserved tolerance logic for scalars and vectors") {
+  CHECK(pf::is_conserved(100., 100.5) == true);
+  CHECK(pf::is_conserved(100., 120.) == false);
+  CHECK(pf::is_conserved(0., 1E-3) == true);
+  CHECK(pf::is_conserved(0., 0.1) == false);
+
+  CHECK(pf::is_conserved(pf::Vec2D{100., 150.}, pf::Vec2D{100.5, 150.5}) ==
+        true);
+  CHECK(pf::is_conserved(pf::Vec2D{100., 150.}, pf::Vec2D{105., 155.}) ==
+        false);
+  CHECK(pf::is_conserved(pf::Vec2D{0., 0.}, pf::Vec2D{1E-3, 1E-3}) == true);
+  CHECK(pf::is_conserved(pf::Vec2D{0., 0.}, pf::Vec2D{0.5, 0.5}) == false);
+}
+
+// ============================================================================
+// 4. FILE I/O TESTS
+// ============================================================================
+TEST_CASE("load_bodies_from_file functionality") {
   std::string const filename{"test_input_tmp.txt"};
   {
     std::ofstream out{filename};
@@ -49,91 +153,64 @@ TEST_CASE("readBodiesFromFile reads correctly a valid file") {
     out << "2. 1. 0. 0. 1.\n";
   }
 
-  auto bodies = pf::readBodiesFromFile(filename);
+  auto bodies = pf::load_bodies_from_file(filename);
 
   REQUIRE(bodies.size() == 2);
-  CHECK(bodies[0].m() == doctest::Approx(1.));
-  CHECK(bodies[1].m() == doctest::Approx(2.));
-  CHECK(bodies[1].r.x == doctest::Approx(1.));
-  CHECK(bodies[1].v.y == doctest::Approx(1.));
+  CHECK(bodies[0].get_m() == doctest::Approx(1.));
+  CHECK(bodies[1].get_m() == doctest::Approx(2.));
+  CHECK(bodies[1].get_r().x == doctest::Approx(1.));
+  CHECK(bodies[1].get_v().y == doctest::Approx(1.));
 
   std::remove(filename.c_str());
 }
 
-TEST_CASE("readBodiesFromFile throws an exception if file doesn't exists") {
-  CHECK_THROWS_AS(pf::readBodiesFromFile("file_che_non_esiste.txt"),
+TEST_CASE("load_bodies_from_file throws on missing file") {
+  CHECK_THROWS_AS(pf::load_bodies_from_file("not_existing_file.txt"),
                   std::runtime_error);
 }
 
-TEST_CASE("computeEnergy is the sum of kinetic and potential energy") {
+// ============================================================================
+// 5. SIMULATION/ CONSERVED QUANTITIES TEST
+// ============================================================================
+TEST_CASE("Simulation initialization throws if less than two bodies") {
   std::vector<pf::Body> bodies{
-      pf::Body{1., pf::TDvec{0., 0.}, pf::TDvec{1., 0.}, pf::TDvec{0., 0.}},
-      pf::Body{1., pf::TDvec{1., 0.}, pf::TDvec{0., 0.}, pf::TDvec{0., 0.}}};
+      pf::Body{1., pf::Vec2D{1., 0.}, pf::Vec2D{0., 1.}}};
 
-  double const K{pf::computeKineticEnergy(bodies)};
-  double const U{pf::computePotentialEnergy(bodies)};
-  double const E{pf::computeEnergy(bodies)};
-
-  CHECK(E == doctest::Approx(K + U));
+  CHECK_THROWS_AS((pf::Simulation{bodies}), std::runtime_error);
 }
 
-TEST_CASE("computeMomentum computes correctly the total momentum") {
+TEST_CASE("Newton's Third Law (opposite accelerations)") {
   std::vector<pf::Body> bodies{
-      pf::Body{2., pf::TDvec{0., 0.}, pf::TDvec{1., 0.}, pf::TDvec{0., 0.}},
-      pf::Body{3., pf::TDvec{0., 0.}, pf::TDvec{0., 2.}, pf::TDvec{0., 0.}}};
+      pf::Body{1., pf::Vec2D{0., 0.}, pf::Vec2D{0., 0.}},
+      pf::Body{1., pf::Vec2D{1., 0.}, pf::Vec2D{0., 0.}}};
 
-  pf::TDvec P = pf::computeMomentum(bodies);
-  CHECK(P.x == doctest::Approx(2.));  // 2*1 + 3*0
-  CHECK(P.y == doctest::Approx(6.));  // 2*0 + 3*2
+  pf::Simulation sim(std::move(bodies));
+
+  CHECK(sim.get_bodies()[0].get_a().x > 0.);
+  CHECK(sim.get_bodies()[0].get_a().x ==
+        doctest::Approx(-sim.get_bodies()[1].get_a().x));
 }
 
-TEST_CASE("computeAngularMomentum computes correctly the angular momentum") {
+TEST_CASE("Energy, Momentum and Angular Momentum conserved at EVERY step") {
   std::vector<pf::Body> bodies{
-      pf::Body{1., pf::TDvec{1., 0.}, pf::TDvec{0., 1.}, pf::TDvec{0., 0.}}};
+      pf::Body{1., pf::Vec2D{-0.97000436, 0.24308753},
+               pf::Vec2D{0.4662036850, 0.4323657300}},
+      pf::Body{2., pf::Vec2D{0.97000436, -0.24308753},
+               pf::Vec2D{0.4662036850, 0.4323657300}},
+      pf::Body{3., pf::Vec2D{0., 0.}, pf::Vec2D{-0.93240737, -0.86473146}}};
 
-  // L = m*(x*vy - y*vx) = 1*(1*1 - 0*0) = 1
-  CHECK(pf::computeAngularMomentum(bodies) == doctest::Approx(1.));
-}
+  pf::SystemTotals initial = pf::compute_totals(bodies);
+  pf::Simulation sim(std::move(bodies));
 
-TEST_CASE("Momentum and angular momentum are conserved during the simulation") {
-  double const m{1. / pf::G};
-  std::vector<pf::Body> bodies{
-      pf::Body{m, pf::TDvec{-0.97000436, 0.24308753},
-               pf::TDvec{0.4662036850, 0.4323657300}, pf::TDvec{0., 0.}},
-      pf::Body{m, pf::TDvec{0.97000436, -0.24308753},
-               pf::TDvec{0.4662036850, 0.4323657300}, pf::TDvec{0., 0.}},
-      pf::Body{m, pf::TDvec{0., 0.}, pf::TDvec{-0.93240737, -0.86473146},
-               pf::TDvec{0., 0.}}};
+  for (int step = 0; step < 100; ++step) {
+    sim.step();
+    pf::SystemTotals current = pf::compute_totals(sim.get_bodies());
 
-  pf::computeAccelerations(bodies);
-  pf::TDvec const P0{pf::computeMomentum(bodies)};
-  double const L0{pf::computeAngularMomentum(bodies)};
-
-  for (int i{0}; i < 100; ++i) {
-    pf::step(bodies);
+    CHECK_MESSAGE(pf::is_conserved(initial.E, current.E),
+                  "Energy lost at step ", step + 1);
+    CHECK_MESSAGE(pf::is_conserved(initial.P, current.P),
+                  "Momentum lost at step ", step + 1);
+    CHECK_MESSAGE(pf::is_conserved(initial.L, current.L),
+                  "Angular momentum lost at step ", step + 1);
   }
-
-  CHECK(pf::isMomentumConserved(bodies, P0, 0.01) == true);
-  CHECK(pf::isAngularMomentumConserved(bodies, L0, 0.01) == true);
-}
-
-TEST_CASE("step conserves energy approximately over a few steps") {
-  double const m{1. / pf::G};
-  std::vector<pf::Body> bodies{
-      pf::Body{m, pf::TDvec{-0.97000436, 0.24308753},
-               pf::TDvec{0.4662036850, 0.4323657300}, pf::TDvec{0., 0.}},
-      pf::Body{m, pf::TDvec{0.97000436, -0.24308753},
-               pf::TDvec{0.4662036850, 0.4323657300}, pf::TDvec{0., 0.}},
-      pf::Body{m, pf::TDvec{0., 0.}, pf::TDvec{-0.93240737, -0.86473146},
-               pf::TDvec{0., 0.}}};
-
-  pf::computeAccelerations(bodies);
-  double const E0{pf::computeEnergy(bodies)};
-
-  for (int i{0}; i < 100; ++i) {
-    pf::step(bodies);
-  }
-
-  double const E{pf::computeEnergy(bodies)};
-  CHECK(pf::isEnergyConserved(E0, E, 0.01) == true);
 }

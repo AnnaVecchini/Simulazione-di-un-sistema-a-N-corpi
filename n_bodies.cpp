@@ -1,173 +1,226 @@
 #include "n_bodies.hpp"
 
-#include <cstddef>
 #include <fstream>
+#include <iostream>
+#include <numeric>
+#include <stdexcept>
 
 namespace pf {
 
-std::vector<Body> readBodiesFromFile(std::string const& filename) {
-  std::ifstream input{filename};
-  if (!input) {
-    throw std::runtime_error("Impossible to open the file: " + filename);
-  }
-
-  std::vector<Body> bodies;
-  double m{};
-  double x{};
-  double y{};
-  double vx{};
-  double vy{};
-  while (input >> m >> x >> y >> vx >> vy) {
-    bodies.push_back(Body{m, TDvec{x, y}, TDvec{vx, vy}, TDvec{0., 0.}});
-  }
-
-  return bodies;
+// ============================================================================
+// 2D algebra
+// ============================================================================
+Vec2D &Vec2D::operator+=(Vec2D const &b) {
+  x += b.x;
+  y += b.y;
+  return *this;
 }
 
-Body::Body(double mass, TDvec pos, TDvec vel, TDvec acc)
-    : m_{mass}, r{pos}, v{vel}, a{acc} {
-  if (m_ <= 0) {
-    throw std::invalid_argument("The mass must be positive");
+Vec2D operator+(Vec2D a, Vec2D const &b) {
+  a += b;
+  return a;
+}
+
+Vec2D operator-(Vec2D const &a, Vec2D const &b) {
+  return {a.x - b.x, a.y - b.y};
+}
+
+Vec2D operator*(Vec2D const &a, double h) { return {a.x * h, a.y * h}; }
+
+bool operator==(Vec2D const &a, Vec2D const &b) {
+  return a.x == b.x && a.y == b.y;
+}
+
+double norm2(Vec2D const &a) { return a.x * a.x + a.y * a.y; }
+
+// ============================================================================
+// Single entity: Body
+// ============================================================================
+void Body::validate() {
+  if (m_ <= 0.) {
+    throw std::runtime_error{"mass must be strictly positive"};
   }
-  if (norm(v) >= c_light) {
-    throw std::invalid_argument(
-        "The speed must be less than the speed of light");
+  if (norm(v_) > constant::c_light) {
+    throw std::runtime_error{"can not exceed the speed of light"};
   }
 }
 
-void computeAccelerations(std::vector<Body>& bodies) {
+Body::Body(double mass, Vec2D pos, Vec2D vel) : m_{mass}, r_{pos}, v_{vel} {
+  validate();
+}
+
+Body::Body(double mass, double rx, double ry, double vx, double vy)
+    : Body(mass, Vec2D{rx, ry}, Vec2D{vx, vy}) {}
+
+void Body::update_position(double dt) { r_ += v_ * dt + 0.5 * a_ * dt * dt; }
+
+void Body::update_velocity(Vec2D const &old_a, double dt) {
+  v_ += 0.5 * (a_ + old_a) * dt;
+  validate();
+}
+
+double calculate_kinetic_energy(Body const &b) {
+  return 0.5 * b.get_m() * norm2(b.get_v());
+}
+
+Vec2D calculate_momentum(Body const &b) { return b.get_m() * b.get_v(); }
+
+double calculate_angular_momentum(Body const &b) {
+  Vec2D r = b.get_r();
+  Vec2D v = b.get_v();
+  return b.get_m() * (r.x * v.y - r.y * v.x);
+}
+
+// ============================================================================
+// Conserved quantities
+// ============================================================================
+double total_kinetic_energy(std::vector<Body> const &bodies) {
+  return std::accumulate(bodies.begin(), bodies.end(), 0.,
+                         [](double acc, Body const &b) {
+                           return acc + calculate_kinetic_energy(b);
+                         });
+}
+
+double total_potential_energy(std::vector<Body> const &bodies) {
+  double U{};
   std::size_t N = bodies.size();
-
-  for (std::size_t i{0}; i < N; ++i) {
-    TDvec a_i{0, 0};
-
-    for (std::size_t j{0}; j < N; ++j) {
-      if (j != i) {
-        TDvec diff = bodies[i].r - bodies[j].r;
-
-        double dist2 = diff.x * diff.x + diff.y * diff.y;
-
-        double denom = std::pow(dist2 + eps * eps, 1.5);
-
-        a_i = a_i - diff * (G * bodies[j].m() / denom);
-      }
-    }
-
-    bodies[i].a = a_i;
-  }
-}
-
-void step(std::vector<Body>& bodies) {
-  std::size_t N = bodies.size();
-
-  // Salvo le vecchie accelerazioni a(t), prima di aggiornare le posizioni
-  std::vector<TDvec> old_a(N);
-  for (std::size_t i{0}; i < N; ++i) {
-    old_a[i] = bodies[i].a;
-  }
-
-  // Primo ciclo: aggiorno TUTTE le posizioni usando v(t) e a(t) correnti
-  for (std::size_t i{0}; i < N; ++i) {
-    bodies[i].r = bodies[i].r + bodies[i].v * dt + 0.5 * bodies[i].a * dt * dt;
-  }
-
-  // Ricalcolo le accelerazioni a(t+dt) alle nuove posizioni
-  computeAccelerations(bodies);
-
-  // Secondo ciclo: aggiorno TUTTE le velocita' usando la media
-  // tra a(t) (old_a) e a(t+dt) (bodies[i].a, gia' ricalcolata)
-  for (std::size_t i{0}; i < N; ++i) {
-    bodies[i].v = bodies[i].v + 0.5 * (bodies[i].a + old_a[i]) * dt;
-  }
-
-  t += dt;
-}
-
-double computeKineticEnergy(std::vector<Body> const& bodies) {
-  std::size_t N = bodies.size();
-
-  double K{0.};
-  for (std::size_t i{0}; i < N; ++i) {
-    double v_i = norm(bodies[i].v);
-    K += 0.5 * bodies[i].m() * v_i * v_i;
-  }
-
-  return K;
-}
-
-double computePotentialEnergy(std::vector<Body> const& bodies) {
-  std::size_t N = bodies.size();
-
-  // Somma sulle coppie i<j, per non contarle due volte
-  double U{0.};
-  for (std::size_t i{0}; i < N; ++i) {
+  for (std::size_t i{}; i < N - 1; ++i) {
+    auto const &bi = bodies[i];
     for (std::size_t j{i + 1}; j < N; ++j) {
-      double dist = norm(bodies[i].r - bodies[j].r);
-      U -= G * bodies[i].m() * bodies[j].m() / dist;
+      auto const &bj = bodies[j];
+      U -=
+          constant::G * bi.get_m() * bj.get_m() / norm(bi.get_r() - bj.get_r());
     }
   }
-
   return U;
 }
 
-double computeEnergy(std::vector<Body> const& bodies) {
-  return computeKineticEnergy(bodies) + computePotentialEnergy(bodies);
+double total_energy(std::vector<Body> const &bodies) {
+  return total_kinetic_energy(bodies) + total_potential_energy(bodies);
 }
 
-bool isEnergyConserved(double E0, double E, double tolerance) {
-  return std::abs(E - E0) <= tolerance * std::abs(E0);
+Vec2D total_momentum(std::vector<Body> const &bodies) {
+  return std::accumulate(
+      bodies.begin(), bodies.end(), Vec2D{0., 0.},
+      [](Vec2D acc, Body const &b) { return acc + calculate_momentum(b); });
 }
 
-TDvec computeMomentum(std::vector<Body> const& bodies) {
-  std::size_t N = bodies.size();
+double total_angular_momentum(std::vector<Body> const &bodies) {
+  return std::accumulate(bodies.begin(), bodies.end(), 0.,
+                         [](double acc, Body const &b) {
+                           return acc + calculate_angular_momentum(b);
+                         });
+}
 
-  TDvec P{0., 0.};
-  for (std::size_t i{0}; i < N; ++i) {
-    P = P + bodies[i].m() * bodies[i].v;
+SystemTotals compute_totals(std::vector<Body> const &bodies) {
+  return {total_energy(bodies), total_momentum(bodies),
+          total_angular_momentum(bodies)};
+}
+
+bool is_conserved(double i_value, double f_value, double tol) {
+  double abs_diff = std::abs(f_value - i_value);
+  double abs_i = std::abs(i_value);
+  if (abs_i < 1E-12) {
+    return abs_diff < tol;
   }
-
-  return P;
+  return abs_diff < abs_i * tol;
 }
 
-double computeAngularMomentum(std::vector<Body> const& bodies) {
-  std::size_t N = bodies.size();
-
-  double L{0.};
-  for (std::size_t i{0}; i < N; ++i) {
-    L += bodies[i].m() *
-         (bodies[i].r.x * bodies[i].v.y - bodies[i].r.y * bodies[i].v.x);
+bool is_conserved(Vec2D const &i_vec, Vec2D const &f_vec, double tol) {
+  double norm_diff = norm(f_vec - i_vec);
+  double norm_i = norm(i_vec);
+  if (norm_i < 1E-12) {
+    return norm_diff < tol;
   }
-
-  return L;
+  return norm_diff < tol * norm_i;
 }
 
-bool isMomentumConserved(std::vector<Body> const& bodies, TDvec const& P0,
-                          double tolerance) {
-  std::size_t N = bodies.size();
-
-  // Scala tipica della quantita' di moto dei singoli corpi, usata
-  // come riferimento al posto di P0 (che puo' essere nullo)
-  double scale{0.};
-  for (std::size_t i{0}; i < N; ++i) {
-    scale += bodies[i].m() * norm(bodies[i].v);
+// ============================================================================
+// Simulation motor
+// ============================================================================
+std::vector<Body> load_bodies_from_file(std::string const &file) {
+  std::ifstream input_file(file);
+  if (!input_file.is_open()) {
+    throw std::runtime_error("could not open the file");
   }
-
-  TDvec P{computeMomentum(bodies)};
-  return norm(P - P0) <= tolerance * scale;
-}
-
-bool isAngularMomentumConserved(std::vector<Body> const& bodies, double L0,
-                                 double tolerance) {
-  std::size_t N = bodies.size();
-
-  // Scala tipica del momento angolare dei singoli corpi
-  double scale{0.};
-  for (std::size_t i{0}; i < N; ++i) {
-    scale += bodies[i].m() * norm(bodies[i].r) * norm(bodies[i].v);
+  std::vector<Body> bodies;
+  double mass{}, rx{}, ry{}, vx{}, vy{};
+  while (input_file >> mass >> rx >> ry >> vx >> vy) {
+    bodies.push_back(Body{mass, rx, ry, vx, vy});
   }
-
-  double L{computeAngularMomentum(bodies)};
-  return std::abs(L - L0) <= tolerance * scale;
+  return bodies;
 }
 
-}  
+void Simulation::validate() {
+  if (bodies_.size() < 2) {
+    throw std::runtime_error{"not enough bodies to run a simulation"};
+  }
+}
+
+void Simulation::calculate_acceleration() {
+  std::size_t N = bodies_.size();
+  double eps2 = eps_ * eps_;
+  for (auto &b : bodies_) {
+    b.set_a({0., 0.});
+  }
+  for (std::size_t i{}; i < N - 1; ++i) {
+    auto &bi = bodies_[i];
+    for (std::size_t j{i + 1}; j < N; ++j) {
+      auto &bj = bodies_[j];
+      Vec2D diff = bj.get_r() - bi.get_r();
+      double k = norm2(diff) + eps2;
+      double factor = constant::G / (k * sqrt(k));
+      bi.increment_a(factor * bj.get_m() * diff);
+      bj.increment_a(-1. * factor * bi.get_m() * diff);
+    }
+  }
+}
+
+Simulation::Simulation(std::vector<Body> v) : bodies_{std::move(v)} {
+  validate();
+  calculate_acceleration();
+}
+
+void Simulation::step() {
+  std::size_t N = bodies_.size();
+  std::vector<Vec2D> old_accs(N);
+  for (std::size_t i{}; i < N; ++i) {
+    bodies_[i].update_position(dt_);
+    old_accs[i] = bodies_[i].get_a();
+  }
+  calculate_acceleration();
+  for (std::size_t i{}; i < N; ++i) {
+    bodies_[i].update_velocity(old_accs[i], dt_);
+  }
+}
+
+void Simulation::run(int n_steps) {
+  for (int i{}; i < n_steps; ++i) {
+    step();
+  }
+}
+
+// ============================================================================
+// On screen informations
+// ============================================================================
+void print_total(std::string const &name, double i_value, double c_value,
+                 int step) {
+  std::cout
+      << name << "(step: " << step << ") = " << c_value
+      << (is_conserved(i_value, c_value)
+              ? " (conserved)"
+              : " (\033[31mnot conserved\033[0m)") // prints "not conserved" red
+      << '\n';
+}
+
+void print_total(std::string const &name, Vec2D const &i_vec,
+                 Vec2D const &c_vec, int step) {
+  std::cout << name << "(step: " << step << ") = " << "(" << c_vec.x << ","
+            << c_vec.y << ")"
+            << (is_conserved(i_vec, c_vec)
+                    ? " (conserved)"
+                    : " (\033[31mnot conserved\033[0m))") // prints "not
+                                                          // conserved" red
+            << '\n';
+}
+} // namespace pf
