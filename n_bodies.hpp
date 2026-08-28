@@ -108,11 +108,11 @@ class Simulation {
 // ============================================================================
 // On screen informations
 // ============================================================================
-void print_total(std::string const &name, double i_value, double c_value,
-                 int step);
+void print_if_not_conserved(char name, double i_value, double c_value,
+                            int step);
 
-void print_total(std::string const &name, Vec2D const &i_vec,
-                 Vec2D const &c_vec, int step);
+void print_if_not_conserved(char name, Vec2D const &i_vec, Vec2D const &c_vec,
+                            int step);
 
 }  // namespace pf
 #endif

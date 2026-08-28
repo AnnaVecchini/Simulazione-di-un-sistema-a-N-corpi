@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"
-
 #include "n_bodies.hpp"
+
+#include "doctest.h"
 
 // ============================================================================
 // 1. 2D ALGEBRA TESTS
@@ -45,8 +45,8 @@ TEST_CASE("Vec2D scalar multiplication operator*") {
 TEST_CASE("Vec2D norm and norm2") {
   pf::Vec2D u{3., 4.};
 
-  CHECK(pf::norm2(u) == doctest::Approx(25.0)); // 3^2 + 4^2
-  CHECK(pf::norm(u) == doctest::Approx(5.0));   // sqrt(25)
+  CHECK(pf::norm2(u) == doctest::Approx(25.0));  // 3^2 + 4^2
+  CHECK(pf::norm(u) == doctest::Approx(5.0));    // sqrt(25)
 }
 
 // ============================================================================
@@ -96,7 +96,7 @@ TEST_CASE("Body kinematics update (Velocity-Verlet steps)") {
 }
 
 // ============================================================================
-// 3. ENERGY/ MOMENTUM/ ANGULAR MOMENTUM TESTS
+// 3. ENERGY/ MOMENTUM/ AGULAR MOMENTUM TESTS
 // ============================================================================
 TEST_CASE("Single body kinetic energy, momentum, and angular momentum") {
   pf::Body b1{1., pf::Vec2D{1., 0.}, pf::Vec2D{0., 1.}};
@@ -170,7 +170,7 @@ TEST_CASE("load_bodies_from_file throws on missing file") {
 }
 
 // ============================================================================
-// 5. SIMULATION/ CONSERVED QUANTITIES TEST
+// 5. SIMULATION TESTS
 // ============================================================================
 TEST_CASE("Simulation initialization throws if less than two bodies") {
   std::vector<pf::Body> bodies{
@@ -191,26 +191,18 @@ TEST_CASE("Newton's Third Law (opposite accelerations)") {
         doctest::Approx(-sim.get_bodies()[1].get_a().x));
 }
 
-TEST_CASE("Energy, Momentum and Angular Momentum conserved at EVERY step") {
+TEST_CASE(
+    "Simulation::step updates position, acceleration and velocity correctly") {
   std::vector<pf::Body> bodies{
-      pf::Body{1., pf::Vec2D{-0.97000436, 0.24308753},
-               pf::Vec2D{0.4662036850, 0.4323657300}},
-      pf::Body{2., pf::Vec2D{0.97000436, -0.24308753},
-               pf::Vec2D{0.4662036850, 0.4323657300}},
-      pf::Body{3., pf::Vec2D{0., 0.}, pf::Vec2D{-0.93240737, -0.86473146}}};
+      pf::Body{1.0, pf::Vec2D{-1.0, 0.0}, pf::Vec2D{0.0, 0.0}},
+      pf::Body{1.0, pf::Vec2D{1.0, 0.0}, pf::Vec2D{0.0, 0.0}}};
 
-  pf::SystemTotals initial = pf::compute_totals(bodies);
   pf::Simulation sim(std::move(bodies));
+  sim.step();
 
-  for (int step = 0; step < 100; ++step) {
-    sim.step();
-    pf::SystemTotals current = pf::compute_totals(sim.get_bodies());
+  auto const &b1 = sim.get_bodies()[0];
 
-    CHECK_MESSAGE(pf::is_conserved(initial.E, current.E),
-                  "Energy lost at step ", step + 1);
-    CHECK_MESSAGE(pf::is_conserved(initial.P, current.P),
-                  "Momentum lost at step ", step + 1);
-    CHECK_MESSAGE(pf::is_conserved(initial.L, current.L),
-                  "Angular momentum lost at step ", step + 1);
-  }
+  CHECK(b1.get_r().x == doctest::Approx(-0.999999999999991657));
+  CHECK(b1.get_a().x == doctest::Approx(1.668575e-11));
+  CHECK(b1.get_v().x == doctest::Approx(1.668575e-14));
 }

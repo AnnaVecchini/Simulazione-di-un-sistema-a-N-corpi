@@ -197,24 +197,21 @@ void Simulation::step() {
 // ============================================================================
 // On screen informations
 // ============================================================================
-void print_total(std::string const &name, double i_value, double c_value,
-                 int step) {
-  std::cout << name << "(step: " << step << ") = " << c_value
-            << (is_conserved(i_value, c_value)
-                    ? " (conserved)"
-                    : " (\033[31mnot conserved\033[0m)")  // prints "not
-                                                          // conserved" red
-            << '\n';
+void print_if_not_conserved(char name, double i_value, double c_value,
+                            int step) {
+  if (!is_conserved(i_value, c_value)) {
+    std::cout << "CONSERVATION FAILED at step: " << step << '\n'
+              << name << " = " << c_value << " (\033[31mnot conserved\033[0m)"
+              << "\n\n";
+  }
 }
 
-void print_total(std::string const &name, Vec2D const &i_vec,
-                 Vec2D const &c_vec, int step) {
-  std::cout << name << "(step: " << step << ") = " << "(" << c_vec.x << ","
-            << c_vec.y << ")"
-            << (is_conserved(i_vec, c_vec)
-                    ? " (conserved)"
-                    : " (\033[31mnot conserved\033[0m))")  // prints "not
-                                                           // conserved" red
-            << '\n';
+void print_if_not_conserved(char name, Vec2D const &i_vec, Vec2D const &c_vec,
+                            int step) {
+  if (!is_conserved(i_vec, c_vec)) {
+    std::cout << "CONSERVATION FAILED at step: " << step << '\n'
+              << name << " = (" << c_vec.x << ", " << c_vec.y
+              << ") (\033[31mnot conserved\033[0m)" << "\n\n";
+  }
 }
 }  // namespace pf
