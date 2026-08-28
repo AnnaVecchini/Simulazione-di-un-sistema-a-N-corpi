@@ -35,7 +35,7 @@ void draw_bodies(std::vector<pf::Body> const &bodies, sf::RenderWindow &window,
 }
 
 void handle_events(sf::RenderWindow &window, int &steps_per_frame,
-                   float &scale) {
+                   double &scale) {
   sf::Event event;
   while (window.pollEvent(event)) {
     if (event.type == sf::Event::Closed) window.close();
@@ -81,7 +81,7 @@ int main() {
 
   int step{};
 
-  float scale{200.f};
+  double scale{200.};
 
   while (window.isOpen()) {
     handle_events(window, SPF, scale);
