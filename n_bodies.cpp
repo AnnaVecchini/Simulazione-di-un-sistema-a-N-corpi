@@ -202,7 +202,7 @@ void print_if_not_conserved(char name, double i_value, double c_value,
   if (!is_conserved(i_value, c_value)) {
     std::cout << "CONSERVATION FAILED at step: " << step << '\n'
               << name << " = " << c_value << " (\033[31mnot conserved\033[0m)"
-              << "\n\n";
+              << "\n\n";  // prints "not conserved" red
   }
 }
 
@@ -211,7 +211,8 @@ void print_if_not_conserved(char name, Vec2D const &i_vec, Vec2D const &c_vec,
   if (!is_conserved(i_vec, c_vec)) {
     std::cout << "CONSERVATION FAILED at step: " << step << '\n'
               << name << " = (" << c_vec.x << ", " << c_vec.y
-              << ") (\033[31mnot conserved\033[0m)" << "\n\n";
+              << ") (\033[31mnot conserved\033[0m)"
+              << "\n\n";  // prints "not conserved" red
   }
 }
 }  // namespace pf
