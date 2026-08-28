@@ -35,28 +35,17 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined")
 # richiede il componente graphics della libreria SFML (versione 2.6 in Ubuntu 24.04)
 find_package(SFML 2.6 COMPONENTS graphics REQUIRED)
 
-# eseguibile principale: la simulazione N-Body, con visualizzazione grafica
-add_executable(n_body main.cpp n_bodies.cpp)
-target_link_libraries(n_body PRIVATE sfml-graphics)
-
-# copia il file delle condizioni iniziali accanto all'eseguibile n_body dopo
-# la build, cosi' il percorso relativo usato in main.cpp per aprirlo funziona
-# indipendentemente da dove viene lanciata la build (rilevante soprattutto
-# con un generator multi-config come Ninja Multi-Config, che mette gli
-# eseguibili in build/Debug/ o build/Release/, non in build/)
-add_custom_command(TARGET n_body POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy
-          ${CMAKE_CURRENT_SOURCE_DIR}/initial_conditions.txt
-          $<TARGET_FILE_DIR:n_body>
-)
+# eseguibile principale: la simulazione N-Bodies, con visualizzazione grafica
+add_executable(n_bodies main.cpp n_bodies.cpp)
+target_link_libraries(n_bodies PRIVATE sfml-graphics)
 
 # il testing e' abilitato di default
 # per disabilitarlo, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
 if (BUILD_TESTING)
 
   # aggiungi l'eseguibile n_body.t
-  add_executable(n_body.t n_bodies_test.cpp n_bodies.cpp)
+  add_executable(n_bodies.t n_bodies_test.cpp n_bodies.cpp)
   # aggiungi l'eseguibile n_body.t alla lista dei test
-  add_test(NAME n_body.t COMMAND n_body.t)
+  add_test(NAME n_bodies.t COMMAND n_bodies.t)
 
 endif()
