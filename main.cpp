@@ -46,7 +46,7 @@ int main() {
     window.setFramerateLimit(60);
     int step_per_frame{10};
 
-    long long step{};
+    int step{};
 
     while (window.isOpen()) {
       // gestisci gli eventi (movimenti o click del mouse, uso della tastiera,
