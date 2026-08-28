@@ -35,7 +35,7 @@ void draw_bodies(std::vector<pf::Body> const &bodies, sf::RenderWindow &window,
 }
 
 void handle_events(sf::RenderWindow &window, int &steps_per_frame,
-                   double &scale) {
+                   float &scale) {
   sf::Event event;
   while (window.pollEvent(event)) {
     if (event.type == sf::Event::Closed) window.close();
@@ -52,9 +52,9 @@ void handle_events(sf::RenderWindow &window, int &steps_per_frame,
         float delta = event.mouseWheelScroll.delta;
 
         if (delta > 0) {
-          scale *= 1.1;
+          scale *= 1.1f;
         } else if (delta < 0) {
-          scale /= 1.1;
+          scale /= 1.1f;
         }
       }
     }
@@ -81,7 +81,7 @@ int main() {
 
   int step{};
 
-  double scale{200.};
+  float scale{200.f};
 
   while (window.isOpen()) {
     handle_events(window, SPF, scale);
